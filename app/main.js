@@ -4,14 +4,14 @@
 
   /* ---------- Bundled data ---------- */
   var ASSETS = 'assets/', ICONS = ASSETS + 'icons/', WP = ASSETS + 'wallpapers/';
-  var CAP = 9, SCRIM_Y = 560;
+  var DEFAULT_HOME_COUNT = 9, SCRIM_Y = 560;
   var DOCK_MODES = { both: { tw: 288, th: 200, pitch: 296 }, text: { tw: 288, th: 104, pitch: 296 }, icons: { tw: 176, th: 144, pitch: 184 } };
   var GRID_ROW = 240, GRID_COL = 344, COLS = 5;
   var ED_ROW = 80, ED_SEP = 56, ED_VIEW = 752;
   var PH_TOP = 220, PH_PITCH = 128, PH_FULL = 5, PH_HEIGHT = 944, PH_COMPACT_TOP = 144, PH_COMPACT_PITCH = 88, PH_COMPACT_VISIBLE = 9;
   var WALL_VISIBLE = 6, WALL_ROW = 92, WALL_DELAY = 200;
   var KEYS = { 37: 'left', 38: 'up', 39: 'right', 40: 'down', 13: 'ok', 27: 'back', 8: 'back', 10009: 'back', 461: 'back' };
-  var FULL = 'Inicio admite nueve accesos. Quita uno primero.', LAST = 'Inicio necesita al menos un acceso';
+  var LAST = 'Inicio necesita al menos un acceso';
 
   var PRIMARY_APPS = [
     { id: 'stremio', name: 'Stremio', mark: true, appId: 'IkWsFHtOY9.Stremio' },
@@ -25,7 +25,7 @@
     { id: 'applemusic', name: 'Apple Music', mark: true, appId: 'org.tizen.apple.apple-music' }
   ];
   var LIVE_ID = 'tv.live';
-  var BRAND_MARKS = ['stremio', 'netflix', 'disneyplus', 'youtube', 'appletv', 'primevideo', 'abciview', 'sbs', 'applemusic', 'hbomax', 'spotify', 'tubi', '3cat', 'skyshowtime', 'atresplayer'];
+  var BRAND_MARKS = ['stremio', 'netflix', 'disneyplus', 'youtube', 'appletv', 'primevideo', 'abciview', 'sbs', 'applemusic', 'hbomax', 'spotify', 'tubi', '3cat', 'skyshowtime', 'atresplayer', 'crunchyroll', 'smarttvclub'];
   var PRIMARY = PRIMARY_APPS.map(function (a) { return a.id; }), APPS = PRIMARY_APPS.slice(), ALPHA = [];
   var WALLS = window.CleanFrameWallpapers || [{ id: 'consolas-noche', name: 'Consolas · Noche', tone: 'dark', ut: { tr: 'light', br: 'light' }, frostVeil: .12 }];
   var ADAPTIVE_INK = window.CleanFrameAdaptiveInk || {};
@@ -145,7 +145,7 @@
     if (typeof a.sourceNumber === 'number' && inputIcons[String(a.sourceNumber)] && inputIcons[String(a.sourceNumber)] !== 'hdmi') return markHtml(inputIcons[String(a.sourceNumber)], w, h, size);
     if (typeof a.sourceNumber === 'number') return '<span class="mark" style="width:' + w + 'px;height:' + h + 'px;display:flex;align-items:center;justify-content:center">' + icon('inputs').replace('<svg ', '<svg style="width:' + size + 'px;height:' + size + 'px" ') + '</span>';
     var nameKey = String(a.name || '').toLowerCase().replace(/[^a-z0-9+]/g, '');
-    var bundled = nameKey === '3cat' || nameKey === 'tv3' ? '3cat' : nameKey === 'skyshowtime' ? 'skyshowtime' : nameKey === 'atresplayer' || nameKey === 'atresplayerpremium' ? 'atresplayer' : nameKey === 'disney+' || nameKey === 'disneyplus' ? 'disneyplus' : '';
+    var bundled = nameKey === '3cat' || nameKey === 'tv3' ? '3cat' : nameKey === 'crunchyroll' ? 'crunchyroll' : nameKey === 'smarttvclub' || nameKey === 'iptvsmarttvclub' ? 'smarttvclub' : nameKey === 'skyshowtime' ? 'skyshowtime' : nameKey === 'atresplayer' || nameKey === 'atresplayerpremium' ? 'atresplayer' : nameKey === 'disney+' || nameKey === 'disneyplus' ? 'disneyplus' : '';
     if (a.mark || bundled) return markHtml(bundled || a.brand || a.id, w, h, size);
     var words = a.name.split(/\s+/), letters = words[0].charAt(0) + (words.length > 1 ? words[1].charAt(0) : '');
     return '<span class="mark monogram' + (a.icon ? ' native-icon' : '') + '" style="width:' + w + 'px;height:' + h + 'px;font-size:' + Math.round(size * .65) + 'px"><span>' + esc(letters.toUpperCase()) + '</span>'
@@ -337,17 +337,17 @@
   function clean(saved) {
     var s = saved && typeof saved === 'object' ? saved : {}, modern = s.look && typeof s.look === 'object' ? s.look : s;
     var legacyList = s.theme === 'list', h = [], recent = [], records = Array.isArray(s.appRecords) ? s.appRecords : [];
-    records.slice(0, 256).forEach(function (a) {
+    records.forEach(function (a) {
       if (!a || !safeId(a.id) || !safeId(a.appId) || typeof a.name !== 'string' || !a.name.trim() || app(a.id)) return;
       APPS.push({ id: a.id, appId: a.appId, name: a.name.slice(0, 160), brand: BRAND_MARKS.indexOf(a.brand) >= 0 ? a.brand : '', mark: BRAND_MARKS.indexOf(a.brand) >= 0, icon: safeIcon(a.icon) });
     });
     (Array.isArray(s.home) ? s.home : Array.isArray(s.dock) ? s.dock : []).forEach(function (id) {
-      if (!safeId(id) || h.indexOf(id) >= 0 || h.length >= CAP) return;
+      if (!safeId(id) || h.indexOf(id) >= 0) return;
       if (!app(id) && id.indexOf('.') > 0) APPS.push({ id: id, appId: id, name: id.split('.').pop(), mark: false });
       if (app(id)) h.push(id);
     });
     h = h.filter(function (id) { return ALPHA.indexOf(id) >= 0; });
-    if (!h.length) h = ALPHA.filter(function (id) { return id !== LIVE_ID && !sourceShortcut(app(id)); }).slice(0, CAP);
+    if (!h.length) h = ALPHA.filter(function (id) { return id !== LIVE_ID && !sourceShortcut(app(id)); }).slice(0, DEFAULT_HOME_COUNT);
     (Array.isArray(s.recent) ? s.recent : []).forEach(function (id) { if (safeId(id) && app(id) && ALPHA.indexOf(id) >= 0 && h.indexOf(id) < 0 && recent.indexOf(id) < 0 && recent.length < 5) recent.push(id); });
     return {
       bg: pick(modern.bg, LOOK_VALUES.bg, legacyList ? 'dark' : 'photo'), layout: pick(modern.layout, LOOK_VALUES.layout, legacyList ? 'list' : 'dock'),
@@ -423,7 +423,7 @@
   }
   function homeAdd(id) {
     var a = app(id), before = snap(), h = S.c.home.slice(), at;
-    if (h.length >= CAP) { S.note = FULL; return false; }
+    if (!a || h.indexOf(id) >= 0) return false;
     at = S.removedAt.hasOwnProperty(id) ? Math.min(S.removedAt[id], h.length) : h.length;
     h.splice(at, 0, id);
     if (!write(next(h, without(S.c.recent, id)), 'Añadir ' + a.name + ' a Inicio')) return false;
@@ -448,8 +448,8 @@
   function undoCaption() { var label = undoLabel(); return label ? 'Deshacer ' + label.charAt(0).toLowerCase() + label.slice(1) : 'No hay cambios que deshacer'; }
   function editStatus(hint, move) {
     if (S.err) return statusHtml('', !!move);
-    if (S.note === FULL || S.note === LAST) return '<span class="warn">' + esc(S.note) + '</span>';
-    if (hint === FULL || hint === LAST) return '<span class="warn">' + esc(hint) + '</span>';
+    if (S.note === LAST) return '<span class="warn">' + esc(S.note) + '</span>';
+    if (hint === LAST) return '<span class="warn">' + esc(hint) + '</span>';
     return esc(move || hint || S.note || '');
   }
 
@@ -523,7 +523,7 @@
       });
       catalog.loaded = !appError || catalog.loaded; catalog.error = appError ? appError.message || 'No se pudieron consultar las aplicaciones instaladas.' : null; catalog.revision++;
       var kept = S.c.home.filter(function (id) { return ALPHA.indexOf(id) >= 0; });
-      if (!kept.length) kept = ALPHA.filter(function (id) { return id !== LIVE_ID && !sourceShortcut(app(id)); }).slice(0, CAP);
+      if (!kept.length) kept = ALPHA.filter(function (id) { return id !== LIVE_ID && !sourceShortcut(app(id)); }).slice(0, DEFAULT_HOME_COUNT);
       var current = next(kept, S.c.recent.filter(function (id) { return ALPHA.indexOf(id) >= 0; }));
       if (kept.indexOf(current.lastApp) < 0) current.lastApp = kept[0] || null;
       write(current, 'Aplicaciones y entradas');
@@ -784,7 +784,7 @@
   function nearestHome(t, count) {
     var target = editorOtherY(t.f.j) - t.top + 36, best = 0, distance = Infinity, i, d;
     for (i = 0; i < count; i++) {
-      d = Math.abs(editorHomeY(i) + 36 - target);
+      d = Math.abs(editorHomeY(i) - (t.homeTop || 0) + 36 - target);
       if (d < distance) { best = i; distance = d; }
     }
     return best;
@@ -1727,6 +1727,7 @@
       return '<h2 class="s-title">Añadir y ordenar</h2><p class="s-sub" data-slot="sub"></p><div class="s-head" data-slot="head"></div>'
         + '<p class="s-label z-home" data-slot="lh"></p><p class="s-label z-other">Disponibles para añadir</p>'
         + '<div class="ed-home" data-slot="home"></div><div class="ed-order-break" data-slot="break">Después, desplázate</div><div class="ed-other-view" data-slot="ov"><div class="ed-other" data-slot="other"></div></div><div class="ed-origin" data-slot="origin"></div>'
+        + '<div class="row-cue editor-home-before" data-slot="homeBefore" aria-hidden="true">' + icon('up') + '</div><div class="row-cue editor-home-after" data-slot="homeAfter" aria-hidden="true">' + icon('down') + '</div>'
         + '<div class="row-cue editor-before" data-slot="otherBefore" aria-hidden="true">' + icon('up') + '</div><div class="row-cue editor-after" data-slot="otherAfter" aria-hidden="true">' + icon('down') + '</div>';
     },
     settings: function () { return '<h2 class="s-title">Personalizar menú</h2><div class="settings-overview" data-slot="list"></div><p class="settings-overview-hint" data-slot="hint"><span class="remote-key">OK</span><span>Abrir el grupo seleccionado</span></p>'; },
@@ -1777,21 +1778,31 @@
       el.after.className = 'row-cue grid-after' + (rows - t.top > vis ? ' is-on' : '');
     },
     editor: function (t, el) {
-      var f = t.f, H = t.lifted ? t.lifted.order : S.c.home, O = otherGroups(), list = O.recent.concat(O.rest), full = S.c.home.length >= CAP;
+      var f = t.f, H = t.lifted ? t.lifted.order : S.c.home, O = otherGroups(), list = O.recent.concat(O.rest);
       var entries = [], ys = [], y = 0, yf, minTop, maxTop = 0, rowEnd, before = false, afterRows = false;
       var hint = catalog.error ? catalog.error : catalog.loading ? 'Cargando aplicaciones y entradas…' : f.zone === 'head' && f.h === 0 ? undoCaption() : f.zone === 'home' && f.part === 'remove' ? (H.length <= 1 ? LAST : sourceShortcut(app(H[f.i])) ? 'OK quita el acceso del carrusel. La entrada sigue disponible.' : H[f.i] === LIVE_ID ? 'OK quita el acceso del carrusel. TV en directo sigue disponible.' : 'OK quita el acceso del carrusel. La aplicación sigue instalada.') : f.zone === 'other' ? 'OK añade este acceso al carrusel. ← vuelve a los accesos de Inicio.' : 'Para ordenar: pulsa OK, usa ↑↓ y pulsa OK. Para quitar: flecha derecha.';
       setHTML(el.sub, editStatus(hint, t.lifted ? 'Moviendo ' + app(t.lifted.id).name + '. ↑↓ cambia la posición; OK guarda; Volver cancela.' : ''));
       setHTML(el.head, headButtons(t.lifted ? [['cancel', 'Cancelar movimiento', '', 'left'], ['place', 'Guardar posición', '', 'check']] : [['undo', 'Deshacer', S.undo.length ? '' : 'is-idle', 'undo'], ['done', 'Terminar', '', 'check']], f.zone === 'head' && !panelFocused(t) ? f.h : -1, 'editor'));
       el.head.className = 's-head' + (f.zone === 'head' ? ' is-awake' : '');
-      setHTML(el.lh, 'Orden del carrusel <span class="s-count">' + S.c.home.length + ' de ' + CAP + '</span>');
-      el['break'].className = 'ed-order-break' + (H.length > editorCut() ? ' is-on' : '');
-      el['break'].style.top = (264 + editorCut() * ED_ROW) + 'px';
+      setHTML(el.lh, 'Orden del carrusel <span class="s-count">' + S.c.home.length + ' accesos</span>');
+      t.homeTop = t.homeTop || 0;
+      if (f.zone === 'home') {
+        yf = editorHomeY(f.i);
+        if (yf < t.homeTop) t.homeTop = yf;
+        if (yf + 72 > t.homeTop + ED_VIEW) t.homeTop = yf + 72 - ED_VIEW;
+      }
+      t.homeTop = clamp(t.homeTop, 0, Math.max(0, editorHomeY(H.length - 1) + 72 - ED_VIEW));
+      el['break'].className = 'ed-order-break' + (H.length > editorCut() && editorCut() * ED_ROW >= t.homeTop && editorCut() * ED_ROW + 24 <= t.homeTop + ED_VIEW ? ' is-on' : '');
+      el['break'].style.top = (264 + editorCut() * ED_ROW - t.homeTop) + 'px';
+      el.homeBefore.className = 'row-cue editor-home-before' + (t.homeTop > 0 ? ' is-on' : '');
+      el.homeAfter.className = 'row-cue editor-home-after' + (editorHomeY(H.length - 1) + 72 > t.homeTop + ED_VIEW ? ' is-on' : '');
 
       keyed(el.home, H.map(function (id) { return { key: id, id: id }; }), function (row, it, i) {
         var a = app(it.id), here = f.zone === 'home' && i === f.i && !panelFocused(t), lifted = !!t.lifted && i === f.i;
         setContent(row, it.id + '|' + a.name + '|' + (inputIcons[String(a.sourceNumber)] || ''), function () { return '<div class="er-name" role="button"><span class="panel-content"><span class="er-num"></span>' + smallMark(a) + '<span class="er-text">' + esc(a.name) + '</span><span class="er-move">' + icon('updown') + '</span></span></div><div class="er-rm" role="button"><span></span></div>'; });
         row.className = 'er' + (here ? ' is-active' : '') + (lifted ? ' is-lifted' : '');
-        row.style.transform = 'translate3d(' + (lifted ? 16 : 0) + 'px,' + editorHomeY(i) + 'px,0)';
+        row.style.transform = 'translate3d(' + (lifted ? 16 : 0) + 'px,' + (editorHomeY(i) - t.homeTop) + 'px,0)';
+        row.style.visibility = editorHomeY(i) >= t.homeTop && editorHomeY(i) + 72 <= t.homeTop + ED_VIEW ? 'visible' : 'hidden';
         row.querySelector('.er-num').textContent = String(i + 1);
         setHTML(row.querySelector('.er-move'), icon('updown') + '<span>' + (lifted ? 'Moviendo' : 'Mover') + '</span>');
         row.firstChild.setAttribute('aria-label', (lifted ? 'Confirmar posición de ' : 'Mover ') + a.name);
@@ -1802,8 +1813,8 @@
         attrs(row.firstChild, 'name', i, 'editor.move.' + it.id);
         attrs(row.lastChild, 'remove', i, 'editor.remove.' + it.id);
       });
-      el.origin.className = 'ed-origin' + (t.lifted && t.lifted.from !== f.i ? ' is-on' : '');
-      if (t.lifted) el.origin.style.transform = 'translate3d(0,' + (264 + editorHomeY(t.lifted.from) + 16) + 'px,0)';
+      el.origin.className = 'ed-origin' + (t.lifted && t.lifted.from !== f.i && editorHomeY(t.lifted.from) >= t.homeTop && editorHomeY(t.lifted.from) + 72 <= t.homeTop + ED_VIEW ? ' is-on' : '');
+      if (t.lifted) el.origin.style.transform = 'translate3d(0,' + (264 + editorHomeY(t.lifted.from) - t.homeTop + 16) + 'px,0)';
 
       if (O.recent.length) { entries.push({ key: 'sep-recent', sep: 'Eliminadas recientemente', y: y }); y += ED_SEP; }
       O.recent.forEach(function (id) { entries.push({ key: id, id: id, y: y }); ys.push(y); y += ED_ROW; });
@@ -1828,7 +1839,7 @@
         if (it.sep) { setContent(row, 'sep|' + it.sep, function () { return esc(it.sep); }); row.className = 'eo-sep'; return; }
         j = list.indexOf(it.id); focus = f.zone === 'other' && j === f.j && !panelFocused(t); a = app(it.id);
         setContent(row, it.id + '|' + a.name + '|' + (inputIcons[String(a.sourceNumber)] || ''), function () { return '<span class="panel-content">' + smallMark(a) + '<span class="eo-text">' + esc(a.name) + '</span><span class="eo-verb"></span></span>'; });
-        setHTML(row.querySelector('.eo-verb'), focus ? '<span class="verb' + (full ? ' is-off' : '') + '">' + (full ? 'Inicio está lleno' : 'Añadir a Inicio') + '</span>' : '');
+        setHTML(row.querySelector('.eo-verb'), focus ? '<span class="verb">Añadir a Inicio</span>' : '');
         row.className = 'eo' + (focus ? ' is-focus' : '');
         row.setAttribute('role', 'button');
         attrs(row, 'other', j, 'editor.add.' + it.id);

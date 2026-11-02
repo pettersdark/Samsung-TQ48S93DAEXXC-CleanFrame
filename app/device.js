@@ -17,8 +17,9 @@
     '3KA0pm7a7V.TubiTV', 'rJeHak5zRg.Spotify', 'icp4AvUPiA.7plus'];
   var CONSUMER_SYSTEM = ['org.tizen.browser', 'com.microsoft.copilot'];
   var EXTRA_BRANDS = {'rJeHak5zRg.Spotify': 'spotify', '5b8c3eb16b.BeamCTVDev': 'hbomax', 'cj37Ni3qXM.HBONow': 'hbomax', '3KA0pm7a7V.TubiTV': 'tubi'};
-  function nameBrand(name) { var key = String(name || '').toLowerCase().replace(/[^a-z0-9+]/g, ''); return key === '3cat' || key === 'tv3' ? '3cat' : key === 'skyshowtime' ? 'skyshowtime' : key === 'atresplayer' || key === 'atresplayerpremium' ? 'atresplayer' : key === 'disney+' || key === 'disneyplus' ? 'disneyplus' : ''; }
+  function nameBrand(name) { var key = String(name || '').toLowerCase().replace(/[^a-z0-9+]/g, ''); return key === '3cat' || key === 'tv3' ? '3cat' : key === 'crunchyroll' ? 'crunchyroll' : key === 'smarttvclub' || key === 'iptvsmarttvclub' ? 'smarttvclub' : key === 'skyshowtime' ? 'skyshowtime' : key === 'atresplayer' || key === 'atresplayerpremium' ? 'atresplayer' : key === 'disney+' || key === 'disneyplus' ? 'disneyplus' : ''; }
   EXTRA_BRANDS['PzkKxRdFT6.TV3'] = '3cat'; EXTRA_BRANDS['skysh0WTIM.SkyShowtime'] = 'skyshowtime';
+  EXTRA_BRANDS['OGLLvqej7u.CrunchyrollWebApp'] = 'crunchyroll'; EXTRA_BRANDS['34lSUifemi.SmartTVClub'] = 'smarttvclub';
   var INTERNAL = ['25emanual2.emanual', 'w2VwCK465D.OTApp', 'adplatform.ADPlayer', 'WykOS4t4F0.cmsWebApp', '25emanual3.emanual',
     'd0m1lV1nt2.emanual', '2022ePop01.SmartTV',
     'ZODRT12q2l.WebAccountExtension', 'ByJlgt0XeD.CastSettingsApp', 'tv6pbVMQFF.PrivacyChoices'];

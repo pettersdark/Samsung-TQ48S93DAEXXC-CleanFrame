@@ -58,5 +58,19 @@
     "source": "Original vector artwork for the bedroom launcher",
     "licence": "MIT",
     "note": "Monochrome TV outline, antenna, play symbol and live indicator; rendered using the existing light/dark mask system."
+  },
+  {
+    "id": "crunchyroll",
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/11.0.0/icons/crunchyroll.svg",
+    "licence": "CC0-1.0",
+    "note": "Simple Icons geometry retained; white fill rendered with the shared theme mask. Trademark remains with owner.",
+    "sha256": "8ee0a2837c1498693a96c0b376b4aff45cb7ad912a28fec2289172378206379e"
+  },
+  {
+    "id": "smarttvclub",
+    "source": "https://smarttv.club/images/svg/sprite.svg#logo",
+    "licence": "Owner artwork; trademark/copyright retained",
+    "note": "Official stacked-TV symbol geometry, omitting the wordmark for small-screen legibility; monochrome white silhouette with TV letters cut out. Trademark/copyright retained.",
+    "sha256": "48ab7449380212fd6ff40efba2673ac938c5d0e4f85cf4d917dfdfa262fe3a7f"
   }
 ]

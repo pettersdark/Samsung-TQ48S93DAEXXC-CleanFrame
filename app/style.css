@@ -775,3 +775,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 
 .stage.is-sheet .focus-status.dark-ink{color:var(--warn)}
 .stage .sheet .er-rm.is-limit.is-focus{color:var(--warn)}
+
+/* A long saved carousel scrolls independently in the order editor. */
+.ed-home{overflow:hidden}
+.er-num{width:64px;flex:none}
+.editor-home-before,.editor-home-after{left:952px;width:32px}
+.editor-home-before{top:264px}
+.editor-home-after{top:976px}

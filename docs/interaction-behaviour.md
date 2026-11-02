@@ -162,3 +162,13 @@ La colección Series v3 añade Maratón de series, Estudio de guion y Rincón de
 Moving remote focus through the channel list retains preview tuning after the existing delay. Hover alone never opens full-screen. Pressing OK or clicking a channel tunes that channel and opens the native full-screen TV viewer only after successful tuning. The independent Ver a pantalla completa button remains available. A failed tune retains the list and its error; cancelled or superseded requests cannot trigger a late handoff.
 
 Al recorrer la lista se conserva la sintonización de vista previa con su espera habitual. Pasar el puntero o mover el foco no abre pantalla completa. Pulsar OK o hacer clic sintoniza ese canal y abre el visor completo después de confirmar la sintonización. Se conserva Ver a pantalla completa. Los errores permanecen visibles y las peticiones canceladas o sustituidas no provocan aperturas tardías.
+
+### Unlimited saved Home shortcuts and additional monochrome brands
+
+Home has no application-imposed maximum shortcut count. New/default Home selection retains its existing initial size; users can add all installed apps and available HDMI/Live TV shortcuts. Saved lists and cached app records are not truncated. Dock/List navigation scrolls with focus; the order editor has an independent scrolling Home column with edge cues and a total count, supporting move/remove/undo beyond the former nine-item limit. Device storage remains a practical resource constraint; failed writes retain existing preferences.
+
+Inicio no impone un máximo de accesos. La selección inicial conserva su tamaño; el usuario puede añadir todas las apps instaladas y accesos HDMI/TV en directo disponibles. No se recortan listas guardadas ni registros de apps. El carrusel y la lista siguen al foco; la columna de ordenación se desplaza, muestra pistas en los extremos y permite mover, quitar y deshacer más allá del antiguo límite de nueve. La capacidad de almacenamiento del televisor sigue siendo un límite práctico; un fallo de guardado conserva las preferencias anteriores.
+
+Crunchyroll and SmartTV Club resolve to bundled monochrome SVGs using installed-app IDs or exact normalized names. Preparing their marks never creates an uninstalled app. SmartTV Club uses its official stacked-TV symbol, with TV lettering cut out for small-size legibility; light/dark theme ink follows the existing mask system.
+
+Crunchyroll y SmartTV Club usan SVG monocromos empaquetados a partir de sus IDs o nombres normalizados. Sus iconos no añaden aplicaciones ausentes. SmartTV Club utiliza el símbolo oficial de televisores, con letras TV recortadas; la tinta clara/oscura usa el mismo sistema visual del menú.

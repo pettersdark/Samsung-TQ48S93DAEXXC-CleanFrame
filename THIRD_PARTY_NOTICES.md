@@ -37,3 +37,5 @@ Development dependencies retain the licences in their npm packages. They are not
 ## Additional identifying brand marks in the bedroom variant
 
 3Cat, SkyShowtime and atresplayer SVG artwork comes from the owners' official sites; monochrome adaptations retain the identifying geometry. Copyright and trademark rights remain with the respective owners; these marks are not relicensed under the repository's MIT licence. Sources are recorded in app/assets/icons/ADDITIONAL-SOURCES.json. Steam, original Nintendo Switch and PlayStation 5 marks use Simple Icons artwork under the included CC0 licence; trademark rights remain with their owners.
+
+Crunchyroll identifying artwork uses Simple Icons 11.0.0 under its included CC0 licence; trademark rights remain with its owner. SmartTV Club artwork is a monochrome adaptation of the official website logo, retaining its owner's copyright/trademark rights; it is not relicensed under the code's MIT licence. Exact sources and adaptation notes are in app/assets/icons/ADDITIONAL-SOURCES.json.
