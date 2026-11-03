@@ -1,0 +1,42 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "videojuegos-invierno",
+  "title": "Videojuegos Invierno",
+  "theme": "videojuegos",
+  "season": "invierno",
+  "generator": "built-in image_gen",
+  "status": "artwork ready; app package loader not yet implemented",
+  "scenes": [
+    {
+      "id": "consolas",
+      "name": "Consolas",
+      "day": "images/consolas-dia.png",
+      "source_dia": "videojuegos-invierno-consolas-dia.png",
+      "night": "images/consolas-noche.png",
+      "source_noche": "videojuegos-invierno-consolas-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "pc",
+      "name": "PC",
+      "day": "images/pc-dia.png",
+      "source_dia": "videojuegos-invierno-pc-dia.png",
+      "night": "images/pc-noche.png",
+      "source_noche": "videojuegos-invierno-pc-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "arcade",
+      "name": "Sala recreativa",
+      "day": "images/arcade-dia.png",
+      "source_dia": "videojuegos-invierno-arcade-dia-v2.png",
+      "night": "images/arcade-noche.png",
+      "source_noche": "videojuegos-invierno-arcade-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

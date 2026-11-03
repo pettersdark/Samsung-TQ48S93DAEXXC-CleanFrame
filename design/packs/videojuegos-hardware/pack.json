@@ -1,0 +1,36 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "videojuegos-hardware",
+  "title": "Videojuegos Sistemas",
+  "theme": "videojuegos",
+  "season": "all",
+  "generator": "built-in image_gen",
+  "status": "Artwork ready; not installed; app package loader pending",
+  "scenes": [
+    {
+      "id": "sony",
+      "name": "Consolas Sony",
+      "day": "images/sony-dia.png",
+      "night": "images/sony-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "nintendo",
+      "name": "Consolas Nintendo",
+      "day": "images/nintendo-dia.png",
+      "night": "images/nintendo-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "componentes-pc",
+      "name": "Componentes de PC",
+      "day": "images/componentes-pc-dia.png",
+      "night": "images/componentes-pc-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

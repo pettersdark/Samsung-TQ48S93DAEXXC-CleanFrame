@@ -1,3 +1,5 @@
+> Current wallpaper packages and single-line clock: [behavior and validation](wallpaper-packs.md). Historical gallery counts below are superseded.
+
 > Bedroom adaptation: start with [the current project record](bedroom/PROJECT.md) and [the English guide](bedroom/README.en.md) / [la guía en español](bedroom/README.es.md). Reference-machine and historical release statements below describe upstream, not this adaptation.
 
 # Development

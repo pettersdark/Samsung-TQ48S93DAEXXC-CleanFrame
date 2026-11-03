@@ -1,0 +1,61 @@
+{
+  "tool": "Built-in image_gen",
+  "source_histories": [
+    {
+      "source_pack": "cine-verano",
+      "prompts": {
+        "tool": "Built-in image_gen",
+        "history": [
+          {
+            "id": "cine-verano-salon-dia",
+            "reference": "cine-invierno-salon-dia-v2.png",
+            "prompt": "Seasonal edit of THIS CINEMA-ONLY room. Preserve exact room layout, camera, furniture, blank screen, wood surfaces and quiet empty lower floor/rug. Turn winter day into SUMMER DAY: replace the snow outside with sunlit green foliage and a soft blue sky, remove heavy wool throws or replace with light cream linen, introduce fresh soft summer daylight. Keep warm natural wood and gentle cream tones, no marble. Do NOT add any arcade cabinets, game consoles, gaming PCs, controllers, people, text, film scenes or UI. One seamless 16:9 wallpaper, same composition and lower empty menu zone."
+          },
+          {
+            "id": "cine-verano-proyeccion-dia",
+            "reference": "cine-invierno-proyeccion-dia-v2.png",
+            "prompt": "Seasonal edit of THIS CINEMA-ONLY room. Preserve exact room layout, camera, furniture, blank screen, wood surfaces and quiet empty lower floor/rug. Turn winter day into SUMMER DAY: replace the snow outside with sunlit green foliage and a soft blue sky, remove heavy wool throws or replace with light cream linen, introduce fresh soft summer daylight. Keep warm natural wood and gentle cream tones, no marble. Do NOT add any arcade cabinets, game consoles, gaming PCs, controllers, people, text, film scenes or UI. One seamless 16:9 wallpaper, same composition and lower empty menu zone."
+          },
+          {
+            "id": "cine-verano-cinefilo-dia",
+            "reference": "cine-invierno-cinefilo-dia-v2.png",
+            "prompt": "Seasonal edit of THIS CINEMA-ONLY room. Preserve exact room layout, camera, furniture, blank screen, wood surfaces and quiet empty lower floor/rug. Turn winter day into SUMMER DAY: replace the snow outside with sunlit green foliage and a soft blue sky, remove heavy wool throws or replace with light cream linen, introduce fresh soft summer daylight. Keep warm natural wood and gentle cream tones, no marble. Do NOT add any arcade cabinets, game consoles, gaming PCs, controllers, people, text, film scenes or UI. One seamless 16:9 wallpaper, same composition and lower empty menu zone."
+          },
+          {
+            "id": "cine-verano-salon-noche",
+            "reference": "cine-verano-salon-dia.png",
+            "prompt": "Lighting-only edit of THIS exact summer room wallpaper. Keep all furniture, props, textiles, blank screen, camera framing, scale and the quiet clear lower floor/rug exactly. Change SUMMER DAY to SUMMER NIGHT: outside is dark blue summer sky and subtly visible green foliage, NO snow or cold-weather changes. Indoors use dim warm amber lamps, gentle indirect light, naturally dark shadow detail, clearly darker than daytime yet still comfortably readable. No daylight, no new objects, no people, no arcade cabinets or any gaming hardware, no text or UI, no rectangular bottom bands. One seamless full-bleed 16:9 photograph."
+          },
+          {
+            "id": "cine-verano-proyeccion-noche",
+            "reference": "cine-verano-proyeccion-dia.png",
+            "prompt": "Lighting-only edit of THIS exact summer room wallpaper. Keep all furniture, props, textiles, blank screen, camera framing, scale and the quiet clear lower floor/rug exactly. Change SUMMER DAY to SUMMER NIGHT: outside is dark blue summer sky and subtly visible green foliage, NO snow or cold-weather changes. Indoors use dim warm amber lamps, gentle indirect light, naturally dark shadow detail, clearly darker than daytime yet still comfortably readable. No daylight, no new objects, no people, no arcade cabinets or any gaming hardware, no text or UI, no rectangular bottom bands. One seamless full-bleed 16:9 photograph."
+          },
+          {
+            "id": "cine-verano-cinefilo-noche",
+            "reference": "cine-verano-cinefilo-dia.png",
+            "prompt": "Lighting-only edit of THIS exact summer room wallpaper. Keep all furniture, props, textiles, blank screen, camera framing, scale and the quiet clear lower floor/rug exactly. Change SUMMER DAY to SUMMER NIGHT: outside is dark blue summer sky and subtly visible green foliage, NO snow or cold-weather changes. Indoors use dim warm amber lamps, gentle indirect light, naturally dark shadow detail, clearly darker than daytime yet still comfortably readable. No daylight, no new objects, no people, no arcade cabinets or any gaming hardware, no text or UI, no rectangular bottom bands. One seamless full-bleed 16:9 photograph."
+          }
+        ]
+      }
+    },
+    {
+      "source_pack": "series-verano",
+      "prompts": {
+        "tool": "Built-in image_gen",
+        "history": [
+          {
+            "id": "series-verano-maraton-dia",
+            "reference": "series-invierno-maraton-dia.png",
+            "prompt": "Seasonal edit of THIS series-watching living room. Preserve exact composition, sofa/chair, side table, blank TV, clear quiet bottom rug and all main positions. Change to SUMMER DAY: snow outdoors becomes lush green foliage with gentle blue sky, heavy knitted blankets become casually folded lightweight linen, hot chocolate becomes an iced drink in a modest plain glass, warm fresh summer daylight. Cream, light oak, muted green and terracotta remain cozy. No marble, no people, NO arcade or game equipment, no readable text, no UI. One seamless 16:9 wallpaper."
+          },
+          {
+            "id": "series-verano-maraton-noche",
+            "reference": "series-verano-maraton-dia.png",
+            "prompt": "Lighting-only edit of THIS exact summer room wallpaper. Keep all furniture, props, textiles, blank screen, camera framing, scale and the quiet clear lower floor/rug exactly. Change SUMMER DAY to SUMMER NIGHT: outside is dark blue summer sky and subtly visible green foliage, NO snow or cold-weather changes. Indoors use dim warm amber lamps, gentle indirect light, naturally dark shadow detail, clearly darker than daytime yet still comfortably readable. No daylight, no new objects, no people, no arcade cabinets or any gaming hardware, no text or UI, no rectangular bottom bands. One seamless full-bleed 16:9 photograph."
+          }
+        ]
+      }
+    }
+  ]
+}

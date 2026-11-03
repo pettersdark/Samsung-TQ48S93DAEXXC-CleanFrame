@@ -4,7 +4,7 @@
 
   /* ---------- Bundled data ---------- */
   var ASSETS = 'assets/', ICONS = ASSETS + 'icons/', WP = ASSETS + 'wallpapers/';
-  var DEFAULT_HOME_COUNT = 9, SCRIM_Y = 560;
+  var DEFAULT_HOME_COUNT = 9, SCRIM_Y = 560, HOME_EDGE = 48;
   var DOCK_MODES = { both: { tw: 288, th: 200, pitch: 296 }, text: { tw: 288, th: 104, pitch: 296 }, icons: { tw: 176, th: 144, pitch: 184 } };
   var GRID_ROW = 240, GRID_COL = 344, COLS = 5;
   var ED_ROW = 80, ED_SEP = 56, ED_VIEW = 752;
@@ -27,7 +27,14 @@
   var LIVE_ID = 'tv.live';
   var BRAND_MARKS = ['stremio', 'netflix', 'disneyplus', 'youtube', 'appletv', 'primevideo', 'abciview', 'sbs', 'applemusic', 'hbomax', 'spotify', 'tubi', '3cat', 'skyshowtime', 'atresplayer', 'crunchyroll', 'smarttvclub'];
   var PRIMARY = PRIMARY_APPS.map(function (a) { return a.id; }), APPS = PRIMARY_APPS.slice(), ALPHA = [];
-  var WALLS = window.CleanFrameWallpapers || [{ id: 'consolas-noche', name: 'Consolas · Noche', tone: 'dark', ut: { tr: 'light', br: 'light' }, frostVeil: .12 }];
+  var WALLS = window.CleanFrameWallpapers || [{ id: 'cine-series-oled-cine-noche', name: 'Consolas · Noche', tone: 'dark', ut: { tr: 'light', br: 'light' }, frostVeil: .12 }];
+  var PACKS = window.CleanFrameWallpaperPacks;
+  var WALL_ENGINE = window.CleanFrameWallpaperEngine.create(PACKS);
+  function wallpaperNow() { return QA.now ? new Date(QA.now()) : new Date(); }
+  function resolveWallpaper(c, advance) { return WALL_ENGINE.resolve(c, wallpaperNow(), advance); }
+  function wallpaperChoices(t) { return t.items; }
+  function packName() { return WALL_ENGINE.pack(S.c.pack).name; }
+  function timeLabel(minutes) { return ('0' + Math.floor(minutes / 60)).slice(-2) + ':' + ('0' + minutes % 60).slice(-2); }
   var ADAPTIVE_INK = window.CleanFrameAdaptiveInk || {};
   WALLS.forEach(function (w) { w.ut = w.ut || { tr: 'light', br: 'light' }; w.frostVeil = w.frostVeil || .12; });
   var MODES = [
@@ -36,7 +43,7 @@
     { id: '60', name: 'Cada hora', min: 60 }
   ];
   var KEY = 'cleanframe.home.v1', storageOk = true, catalog = { loading: false, loaded: false, error: null, request: 0, revision: 0 };
-  var QA = window.ShoreQA = { minuteMs: window.ShoreQA && window.ShoreQA.minuteMs || 60000 };
+  var QA = window.ShoreQA = { minuteMs: window.ShoreQA && window.ShoreQA.minuteMs || 60000, now: window.ShoreQA && window.ShoreQA.now };
   var FONTS = {
     manrope: { name: 'Manrope', family: 'Manrope', display: 600, ui: 500, clock: 500 },
     montreal: { name: 'Neue Montreal', family: 'Study Montreal', display: 300, ui: 400, clock: 300 },
@@ -88,13 +95,12 @@
     for (var i = 0; i < list.length; i++) if (list[i].toLowerCase() === v) return list[i];
     return fallback;
   }
-  function lookOf(c) { return { bg: c.bg, wall: c.wall, layout: c.layout, apps: c.apps, font: c.font, controls: c.controls, focus: c.focus, material: c.material }; }
-  function materialApplies(c) { c = c || S.c; return c.bg === 'photo' && (c.layout === 'dock' || c.focus === 'glass'); }
+  function lookOf(c) { return { bg: c.bg, wall: c.wall, layout: c.layout, apps: c.apps, font: c.font, controls: c.controls, focus: c.focus, material: c.material, pack: c.pack, aspect: c.aspect, dayStart: c.dayStart, nightStart: c.nightStart }; }
+  function materialApplies(c) { c = c || S.c; return c.bg === 'photo'; }
 
   /* ---------- Helpers ---------- */
   function app(id) { for (var i = 0; i < APPS.length; i++) if (APPS[i].id === id) return APPS[i]; return null; }
   function wall(id) { for (var i = 0; i < WALLS.length; i++) if (WALLS[i].id === id) return WALLS[i]; return null; }
-  function wallIndex(id) { for (var i = 0; i < WALLS.length; i++) if (WALLS[i].id === id) return i; return 0; }
   function frostClass(w) { var i = [.12, .20, .30, .36, .44].indexOf(w.frostVeil); return i > 0 ? ' fv-' + (i + 1) : ''; }
   function wallClasses(w) { return (w.daylight ? ' gaming-day' : '') + frostClass(w) + (w.listColumn ? ' lc-' + w.listColumn : '') + (w.dockQuiet ? ' db-quiet' : '') + (w.clockMist ? ' tl-mist' : ''); }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -336,6 +342,7 @@
   }
   function clean(saved) {
     var s = saved && typeof saved === 'object' ? saved : {}, modern = s.look && typeof s.look === 'object' ? s.look : s;
+    var packPrefs = WALL_ENGINE.clean(s, modern.wall || s.wallpaper, wallpaperNow());
     var legacyList = s.theme === 'list', h = [], recent = [], records = Array.isArray(s.appRecords) ? s.appRecords : [];
     records.forEach(function (a) {
       if (!a || !safeId(a.id) || !safeId(a.appId) || typeof a.name !== 'string' || !a.name.trim() || app(a.id)) return;
@@ -353,7 +360,8 @@
       bg: pick(modern.bg, LOOK_VALUES.bg, legacyList ? 'dark' : 'photo'), layout: pick(modern.layout, LOOK_VALUES.layout, legacyList ? 'list' : 'dock'),
       apps: pick(modern.apps, LOOK_VALUES.apps, legacyList ? 'text' : 'both'), controls: pick(modern.controls, LOOK_VALUES.controls, 'both'),
       focus: pick(modern.focus, LOOK_VALUES.focus, legacyList ? 'type' : 'glass'), material: pick(modern.material, LOOK_VALUES.material, 'soft'),
-      font: pick(modern.font, LOOK_VALUES.font, 'manrope'), wall: wall(modern.wall || s.wallpaper) ? modern.wall || s.wallpaper : 'consolas-noche',
+      font: pick(modern.font, LOOK_VALUES.font, 'manrope'), wall: packPrefs.wall,
+      pack: packPrefs.pack, aspect: packPrefs.aspect, dayStart: packPrefs.dayStart, nightStart: packPrefs.nightStart,
       home: h, recent: recent, lastApp: h.indexOf(s.lastApp) >= 0 ? s.lastApp : h[0],
       mode: pick(s.mode, MODES.map(function (m) { return m.id; }), 'fixed')
     };
@@ -361,7 +369,7 @@
   function serialise(c) {
     var out = {};
     Object.keys(c).forEach(function (key) { out[key] = c[key]; });
-    out.availableApps = ALPHA.slice(); out.version = 2; out.bedroomDefaultsVersion = 3; out.look = lookOf(c); out.dock = c.home.slice(); out.wallpaper = c.wall;
+    out.availableApps = ALPHA.slice(); out.version = 3; out.wallpaperPacksVersion = 1; out.bedroomDefaultsVersion = 3; out.look = lookOf(c); out.dock = c.home.slice(); out.wallpaper = c.wall;
     out.theme = c.layout === 'list' ? 'list' : 'shore';
     out.appRecords = [];
     ALPHA.concat(c.home, c.recent).forEach(function (key) {
@@ -373,10 +381,10 @@
   function initialise() {
     var saved = load(), initial; S.c = clean(saved); initial = next(S.c.home.slice(), S.c.recent.slice());
     // Apply the bedroom starting photo once; later choices remain saved.
-    if (saved && (saved.bedroomDefaultsVersion || 0) < 2) { initial.bg = 'photo'; initial.wall = 'consolas-noche'; initial.mode = 'fixed'; }
+    if (saved && !saved.wallpaperPacksVersion && (saved.bedroomDefaultsVersion || 0) < 2) { initial.bg = 'photo'; initial.wall = 'cine-series-oled-cine-noche'; initial.mode = 'fixed'; }
     S.stack = [{ id: 'home', f: { zone: 'apps', u: 0 } }];
     S.sel = S.c.lastApp; S.selIdx = S.c.home.indexOf(S.sel);
-    if (saved && initial.mode === 'open') initial.wall = WALLS[(wallIndex(initial.wall) + 1) % WALLS.length].id;
+    initial.wall = resolveWallpaper(initial, !!(saved && saved.wallpaperPacksVersion && initial.mode === 'open'));
     // Keep the old schema keys alongside the builder values for in-place updates.
     try { localStorage.setItem(KEY, JSON.stringify(serialise(initial))); S.c = initial; storageOk = true; } catch (e) { storageOk = false; }
   }
@@ -388,7 +396,7 @@
   function write(c, label) {
     try { localStorage.setItem(KEY, JSON.stringify(serialise(c))); }
     catch (e) { storageOk = false; S.failed++; S.err = label; log('Not saved: ' + label); return false; }
-    if (c.wall !== S.c.wall || c.mode !== S.c.mode) resetRotation();
+    if (c.wall !== S.c.wall || c.mode !== S.c.mode || c.pack !== S.c.pack) resetRotation();
     storageOk = true; S.c = c; S.writes++; S.err = null; log('Saved: ' + label);
     return true;
   }
@@ -569,9 +577,10 @@
     push({ id: 'editor', origin: origin, lifted: null, top: 0, otherReturn: { id: otherList()[0] || null, index: 0, top: 0 }, f: { zone: S.c.home.length ? 'home' : 'other', i: Math.max(0, i), part: 'name', h: 1, j: 0 } });
   }
   function openWallpaper() {
-    var i = wallIndex(S.c.wall);
+    var items = WALL_ENGINE.pack(S.c.pack).scenes.map(function (scene) { return wall(scene[WALL_ENGINE.variant(S.c, wallpaperNow())]); });
+    var i = Math.max(0, items.map(function (w) { return w.id; }).indexOf(S.c.wall));
     S.err = null; S.wallError = null;
-    push({ id: 'wallpaper', i: i, top: clamp(i - 2, 0, Math.max(0, WALLS.length - WALL_VISIBLE)), f: { zone: 'photo' },
+    push({ id: 'wallpaper', items: items, i: i, top: clamp(i - 2, 0, Math.max(0, items.length - WALL_VISIBLE)), f: { zone: 'photo' },
       previewTimer: 0, previewDue: null, applyPending: null, failedId: null, failedApply: false, retryBundle: null });
   }
   function isSettingsDetail(t) { return t.id === 'appearance' || t.id === 'wallpaper'; }
@@ -637,7 +646,7 @@
     if (!bundle) S.wallError = id;
   }
   function applyWallpaper(t, prepared) {
-    var w = WALLS[t.i], c, bundle = prepared || S.previewBundle;
+    var w = wallpaperChoices(t)[t.i], c, bundle = prepared || S.previewBundle;
     if (!prepared && (S.wallPending || t.previewDue || S.wallShown !== w.id || S.wallError)) {
       t.applyPending = w.id;
       if (t.previewDue || S.wallPending !== w.id) { cancelWallpaperTimer(t); loadWallpaperPreview(t); }
@@ -652,10 +661,10 @@
     t.failedId = null; t.failedApply = false; t.retryBundle = null;
   }
   function loadWallpaperPreview(t) {
-    var id = WALLS[t.i].id;
+    var id = wallpaperChoices(t)[t.i].id;
     cancelWallpaperTimer(t);
     showWall(id, function (ok) {
-      if (top() !== t || WALLS[t.i].id !== id) return;
+      if (top() !== t || wallpaperChoices(t)[t.i].id !== id) return;
       if (!ok) failWallpaper(t, id, t.applyPending === id, null);
       else if (t.applyPending === id) applyWallpaper(t);
       render(); syncRotation();
@@ -664,7 +673,7 @@
   function previewWallpaper(t, index, apply, immediate) {
     var id, target;
     cancelWallpaperTimer(t); cancelLook();
-    t.i = index; t.f.zone = 'photo'; id = WALLS[index].id;
+    t.i = index; t.f.zone = 'photo'; id = wallpaperChoices(t)[index].id;
     t.applyPending = apply ? id : null; t.failedId = null; t.failedApply = false; t.retryBundle = null;
     S.err = null; S.wallError = null;
     if (id === S.c.wall && committedBundle) {
@@ -680,7 +689,7 @@
     target = lookOf(S.c); target.wall = id;
     S.pending = { patch: { wall: id }, target: target, row: 'bg', preview: true, transient: false, deferred: true };
     t.previewDue = id;
-    t.previewTimer = setTimeout(function () { if (top() === t && WALLS[t.i].id === id) loadWallpaperPreview(t); }, WALL_DELAY);
+    t.previewTimer = setTimeout(function () { if (top() === t && wallpaperChoices(t)[t.i].id === id) loadWallpaperPreview(t); }, WALL_DELAY);
   }
   function retryWallpaper(t) {
     var apply = t.failedApply, bundle = t.retryBundle;
@@ -694,11 +703,11 @@
   }
   V.wallpaper = {
     norm: function (t) {
-      t.i = clamp(t.i, 0, WALLS.length - 1);
+      t.i = clamp(t.i, 0, wallpaperChoices(t).length - 1);
       if (t.f.zone === 'retry' && !t.failedId) t.f.zone = 'photo';
       if (t.i < t.top) t.top = t.i;
       if (t.i >= t.top + WALL_VISIBLE) t.top = t.i - WALL_VISIBLE + 1;
-      t.top = clamp(t.top, 0, Math.max(0, WALLS.length - WALL_VISIBLE));
+      t.top = clamp(t.top, 0, Math.max(0, wallpaperChoices(t).length - WALL_VISIBLE));
     },
     key: function (t, k) {
       if (k === 'back') { closeWallpaper(t); return; }
@@ -714,14 +723,14 @@
       }
       if (k === 'left' || k === 'up' && t.i === 0) { t.nav = 0; t.applyPending = null; }
       else if (k === 'up' && t.i > 0) previewWallpaper(t, t.i - 1, false);
-      else if (k === 'down' && t.i < WALLS.length - 1) previewWallpaper(t, t.i + 1, false);
+      else if (k === 'down' && t.i < wallpaperChoices(t).length - 1) previewWallpaper(t, t.i + 1, false);
       else if ((k === 'right' || k === 'down') && t.failedId) t.f.zone = 'retry';
       else if (k === 'ok') { if (t.retryBundle) applyWallpaper(t, t.retryBundle); else applyWallpaper(t); }
     },
     point: function (t, z, i) {
       if (z === 'wall-back') closeWallpaper(t);
       else if (z === 'wall-retry') retryWallpaper(t);
-      else if (z === 'wall-choice' && i >= 0 && i < WALLS.length) {
+      else if (z === 'wall-choice' && i >= 0 && i < wallpaperChoices(t).length) {
         if (i === t.i) { t.f.zone = 'photo'; this.key(t, 'ok'); }
         else previewWallpaper(t, i, true);
       }
@@ -871,7 +880,7 @@
   function mode() { for (var i = 0; i < MODES.length; i++) if (MODES[i].id === S.c.mode) return MODES[i]; return MODES[0]; }
   function settingsRows() {
     var n = S.c.home.length;
-    return [{ id: 'background', label: 'Fondo', value: S.c.bg === 'photo' ? wall(S.c.wall).name : VALUE_NAMES[S.c.bg] },
+    return [{ id: 'background', label: 'Fondo', value: S.c.bg === 'photo' ? packName() : VALUE_NAMES[S.c.bg] },
       { id: 'inputnames', label: 'Entradas HDMI', value: 'Cambiar nombres e iconos' },
       { id: 'layout', label: 'Diseño', value: VALUE_NAMES[S.c.layout] },
       { id: 'typography', label: 'Tipografía', value: FONTS[S.c.font].name },
@@ -898,10 +907,10 @@
     else if (id === 'inputnames') openInputNames();
     else openAppearance(id);
   }
-  var DETAIL_NAMES = { background: 'Fondo', layout: 'Diseño', typography: 'Tipografía', focus: 'Selección', rotation: 'Rotación', samsung: 'Samsung', inputs: 'Entradas', inputnames: 'Entradas HDMI', inputoptions: 'Entrada HDMI', inputicons: 'Elegir icono' };
+  var DETAIL_NAMES = { background: 'Fondo', layout: 'Diseño', typography: 'Tipografía', focus: 'Selección', rotation: 'Rotación', samsung: 'Samsung', inputs: 'Entradas', inputnames: 'Entradas HDMI', inputoptions: 'Entrada HDMI', inputicons: 'Elegir icono', packs: 'Paquetes de fondos', aspect: 'Día y noche', schedule: 'Horario día y noche' };
   function choice(axis, value, disabled) {
     return { action: axis === 'mode' ? 'rotation.' + value : 'choice.' + axis + '.' + value, axis: axis, value: value, disabled: !!disabled,
-      label: axis === 'font' ? FONTS[value].name : axis === 'mode' ? MODES.filter(function (m) { return m.id === value; })[0].name : value === 'both' ? 'Ambos' : VALUE_NAMES[value] };
+      label: axis === 'font' ? FONTS[value].name : axis === 'aspect' ? { auto: 'Automático', day: 'Día', night: 'Noche' }[value] : axis === 'pack' ? WALL_ENGINE.pack(value).name : axis === 'mode' ? MODES.filter(function (m) { return m.id === value; })[0].name : value === 'both' ? 'Ambos' : VALUE_NAMES[value] };
   }
   function detailSections(t) {
     var flat = S.c.bg !== 'photo', inactive = !materialApplies();
@@ -915,9 +924,23 @@
     if (t.group === 'inputicons') return [{ id: 'port-icons', title: 'HDMI ' + t.input.number + ' · ' + inputLabel(t.input), items: HDMI_ICONS.map(function (item) { return { action: 'inputicon.set.' + item.id, label: item.name, portIcon: item.id, inputNumber: t.input.number, iconPreview: item.id }; }), reason: t.iconError || 'El icono se aplica al carrusel y a Entradas.' }];
     if (t.group === 'background') return [
       { id: 'bg', title: 'Tipo de fondo', items: options('bg', ['photo', 'light', 'dark']) },
-      { id: 'wall', title: 'Imagen', items: [{ action: 'background.wallpaper', label: wall(S.c.wall).name, thumbnail: true, disabled: flat }] },
-      { id: 'rotation', title: 'Rotación', items: [{ action: 'background.rotation', label: mode().name, disabled: flat }], reason: flat ? 'Elige Fotografía para usar imágenes y rotación.' : '' }
+      { id: 'pack', title: 'Paquete', items: [{ action: 'background.packs', label: packName(), thumbnail: true, disabled: flat }] },
+      { id: 'wall', title: 'Escena', items: [{ action: 'background.wallpaper', label: WALL_ENGINE.locate(S.c.wall).scene.name, disabled: flat }] },
+      { id: 'aspect', title: 'Día y noche', items: [{ action: 'background.aspect', label: { auto: 'Automático', day: 'Día', night: 'Noche' }[S.c.aspect], disabled: flat }] },
+      { id: 'rotation', title: 'Rotación', items: [{ action: 'background.rotation', label: mode().name, disabled: flat }] },
+      { id: 'schedule', title: 'Horario automático', items: [{ action: 'background.schedule', label: 'Día ' + timeLabel(S.c.dayStart) + ' / Noche ' + timeLabel(S.c.nightStart), disabled: flat }] }
+
     ];
+    if (t.group === 'packs') return [{ id: 'packs', title: 'Selecciona un paquete', items: PACKS.map(function (p) {
+      var item = choice('pack', p.id, flat); item.description = p.scenes.length + ' escenas con día y noche'; item.thumbnailId = p.scenes[0][WALL_ENGINE.variant(S.c, wallpaperNow())]; return item;
+    }), reason: 'OK aplica el paquete. Rotación y horario se conservan.' }];
+    if (t.group === 'aspect') return [{ id: 'aspect', title: 'Aspecto del paquete', items: options('aspect', ['auto', 'day', 'night'], flat), reason: 'Automático usa la hora local de la TV. Día y Noche mantienen su versión fija.' }];
+    if (t.group === 'schedule') return ['dayStart', 'nightStart'].map(function (key) {
+      return { id: key, title: (key === 'dayStart' ? 'Día desde las ' : 'Noche desde las ') + timeLabel(S.c[key]), horizontal: true, items: [
+        { action: 'schedule.' + key + '.minus', label: '− 30 min', disabled: flat },
+        { action: 'schedule.' + key + '.plus', label: '+ 30 min', disabled: flat }
+      ], reason: key === 'nightStart' ? 'Se guarda con OK. Las dos horas deben ser distintas.' : '' };
+    });
     if (t.group === 'layout') return [
       { id: 'layout', title: 'Diseño', horizontal: true, items: options('layout', ['list', 'dock']) },
       { id: 'apps', title: 'Mostrar aplicaciones', horizontal: true, items: options('apps', ['text', 'icons', 'both']) },
@@ -994,6 +1017,14 @@
     else if (item.axis) { patch[item.axis] = item.value; setLook(patch, { row: item.axis }); }
     else if (item.action === 'background.wallpaper') openWallpaper();
     else if (item.action === 'background.rotation') openAppearance('rotation');
+    else if (item.action === 'background.packs') openAppearance('packs');
+    else if (item.action === 'background.aspect') openAppearance('aspect');
+    else if (item.action === 'background.schedule') openAppearance('schedule');
+    else if (item.action.indexOf('schedule.') === 0) {
+      var parts = item.action.split('.'), timeKey = parts[1], value = (S.c[timeKey] + (parts[2] === 'plus' ? 30 : 1410)) % 1440;
+      if (value === S.c[timeKey === 'dayStart' ? 'nightStart' : 'dayStart']) value = (value + (parts[2] === 'plus' ? 30 : 1410)) % 1440;
+      patch[timeKey] = value; setLook(patch, { row: timeKey });
+    }
     else if (item.action === 'samsung.home') perform('Inicio de Samsung', FrameDevice.home);
     else if (item.action === 'samsung.settings') perform('Ajustes de la TV', FrameDevice.settings);
     else if (item.action === 'samsung.inputs') openInputs();
@@ -1017,7 +1048,7 @@
   V.appearance = {
     norm: function (t) {
       var rows = detailRows(t), exists = false, applied = null;
-      var axis = { background: 'bg', layout: 'layout', typography: 'font', focus: 'focus', rotation: 'mode' }[t.group];
+      var axis = { background: 'bg', layout: 'layout', typography: 'font', focus: 'focus', rotation: 'mode', packs: 'pack', aspect: 'aspect' }[t.group];
       rows.forEach(function (items) { items.forEach(function (item) {
         if (item.action === t.f.action) exists = true;
         if (item.axis === axis && item.value === S.c[axis]) applied = item;
@@ -1186,7 +1217,7 @@
   var utPlates = [$('utLens'), $('utLensAlt')], utFields = [$('utField'), $('utFieldAlt')], utPlateIndex = 0, utPlateKey = null;
   var photoMode = null, photoTransitionToken = 0;
   var sheetEl = $('sheet'), sheetView = $('sheetView'), panelNav = $('panelNav');
-  var IMG = { photo: $('photo'), mat: $('matImg'), bg: $('sheetBg'), field: $('phFieldImg'), fieldAlt: $('phFieldImgAlt'), utility: $('utFieldImg'), utilityAlt: $('utFieldImgAlt') };
+  var IMG = { photo: $('photo'), mat: $('matImg'), bg: $('sheetBg'), field: $('phFieldImg'), fieldAlt: $('phFieldImgAlt'), utility: $('headerClockImg'), utilityAlt: $('headerMenuImg') };
   var sheetKey = '', slotEls = {}, dockEdgeFrame = 0, dockEdgeUntil = 0, dockAnchorCenter = 960;
   var appliedPalette = null, appliedPhoto = null, appliedFont = null, appliedFontMetrics = null;
 
@@ -1266,7 +1297,7 @@
     return text.replace(/[0-9]/g, function (digit) { return '<span class="clock-digit">' + digit + '</span>'; });
   }
   function renderCaption(t, hs) {
-    var html = '<span class="clock">' + clockHtml() + '</span><span class="clock-day">' + ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][new Date().getDay()] + '</span>';
+    var html = '<span class="clock-line"><span class="clock">' + clockHtml() + '</span><span class="clock-day">' + ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][new Date().getDay()] + '</span></span>';
     if (S.c.apps !== 'icons' && hs.items[hs.i] && (S.c.layout === 'list' ? photoLabel(hs.items[hs.i].id, false).size < 88 || photoLabel(hs.items[hs.i].id, false).ellipsis : hs.zone === 'apps' && reducedDockLabel(hs.items[hs.i].id))) html += '<span class="cap-line full-name">' + esc(app(hs.items[hs.i].id).name) + '</span>';
     setHTML(caption, html);
   }
@@ -1285,8 +1316,39 @@
       b.className = b.className.replace(/\s+is-focus/g, '') + (focus ? ' is-focus' : '');
       if (focus) focused = b;
     });
+    alignDockHeader(hs);
     renderUtilFocusLabel(iconsOnly ? focused : null);
     renderUtilityLens(focused, iconsOnly);
+  }
+  /* Shared stage margins, including Settings' scaled Home preview. */
+  function alignDockHeader(hs) {
+    if (S.c.layout !== 'dock') {
+      caption.style.left = ''; caption.style.top = '';
+      utilsEl.style.top = ''; utilsEl.style.right = ''; utilsEl.style.transform = '';
+      renderHeaderMaterials(); return;
+    }
+    var g = dockGeom(hs.items.length || -1), clock = caption.querySelector('.clock-line'), available, factor;
+    caption.style.left = g.x + 'px'; caption.style.top = HOME_EDGE + 'px';
+    utilsEl.style.top = HOME_EDGE + 'px'; utilsEl.style.right = '96px';
+    // A very short carousel can put the clock near the centre. Keep both blocks
+    // separate without shrinking the clock or clipping a long weekday.
+    available = 1824 - g.x - (clock ? clock.offsetWidth : 300) - 32;
+    factor = Math.min(1, Math.max(.1, available / Math.max(1, utilsEl.offsetWidth)));
+    utilsEl.style.transform = factor < 1 ? 'scale(' + factor + ')' : '';
+    renderHeaderMaterials();
+  }
+  function renderHeaderMaterials() {
+    var sr = sceneEl.getBoundingClientRect(), scale = sr.width / 1920 || 1;
+    [{ surface: 'headerClockSurface', target: caption.querySelector('.clock-line'), image: IMG.utility },
+      { surface: 'headerMenuSurface', target: utilsEl, image: IMG.utilityAlt }].forEach(function (part) {
+      var surface = $(part.surface), r, x, y;
+      surface.hidden = S.c.bg !== 'photo' || !part.target;
+      if (surface.hidden) return;
+      r = part.target.getBoundingClientRect(); x = (r.left - sr.left) / scale; y = (r.top - sr.top) / scale;
+      surface.style.left = x + 'px'; surface.style.top = y + 'px';
+      surface.style.width = r.width / scale + 'px'; surface.style.height = r.height / scale + 'px';
+      part.image.style.left = -x + 'px'; part.image.style.top = -y + 'px';
+    });
   }
   function renderUtilFocusLabel(button) {
     var text, key, r, sr, scale, width, x;
@@ -1302,7 +1364,7 @@
     width = Math.ceil(textWidth(text, 28, 500, -.2) + 8); x = (r.left + r.width / 2 - sr.left) / scale - width / 2;
     if (S.c.layout === 'list') x = 1730 - width;
     utilFocusLabel.style.width = width + 'px'; utilFocusLabel.style.left = clamp(x, 112, 1808 - width) + 'px';
-    utilFocusLabel.style.top = ((S.c.layout === 'list' ? (r.top + r.height / 2 - sr.top) / scale - 19 : 140) + fontShift('ui', 28)) + 'px';
+    utilFocusLabel.style.top = ((S.c.layout === 'list' ? (r.top + r.height / 2 - sr.top) / scale - 19 : (r.bottom - sr.top) / scale + 12) + fontShift('ui', 28)) + 'px';
     utilFocusLabel.className = 'util-focus-label is-on';
   }
   function renderUtilityLens(button, iconsOnly) {
@@ -1345,7 +1407,7 @@
       x = 280; placement = phFields[photoPlateIndex]._placement;
       y = placement.y + placement.height / 2 - 24;
     } else {
-      x = clamp(dockAnchorCenter - width / 2, 140, 1780 - width); y = 932;
+      x = clamp(dockAnchorCenter - width / 2, 140, 1780 - width); y = 1080 - HOME_EDGE - 44 - fontShift('primary', 36);
     }
     appFocusName.style.left = x + 'px'; appFocusName.style.top = (y + fontShift('primary', S.c.layout === 'list' ? 40 : 36)) + 'px';
     appFocusName.className = 'app-focus-name is-on';
@@ -1356,7 +1418,7 @@
     var broad = S.geom === 'broad' && n > 5;
     if (n < 0) { w = 912; shelfW = 880; }
     else if (broad) { w = 1728; shelfW = 1696; }
-    return { x: Math.round((1920 - w) / 2), y: 908 - m.th - 32, h: m.th + 32, w: w, shelf: shelfW, vis: vis, broad: broad, empty: n < 0, tw: m.tw, th: m.th, pitch: m.pitch };
+    return { x: Math.round((1920 - w) / 2), y: 1080 - HOME_EDGE - (S.c.apps === 'icons' && n > 0 ? 72 : 0) - m.th - 32, h: m.th + 32, w: w, shelf: shelfW, vis: vis, broad: broad, empty: n < 0, tw: m.tw, th: m.th, pitch: m.pitch };
   }
   /* Five centred: the window moves one tile when focus passes an edge. Broad: keep a
      148px glimpse of the neighbour, as the current dock does. */
@@ -1604,9 +1666,9 @@
         + '<div class="setting-options"' + (section.items[0].axis || section.items[0].portIcon !== undefined ? ' role="radiogroup" aria-label="' + esc(section.title || LOOK_NAMES[section.id] || DETAIL_NAMES[t.group]) + '"' : '') + '>'
         + section.items.map(function (item) {
           var swatch = item.axis === 'bg', body = '';
-          if (swatch || item.thumbnail) body += item.value === 'light' || item.value === 'dark'
+          if (swatch || item.thumbnail || item.thumbnailId) body += item.value === 'light' || item.value === 'dark'
             ? '<span class="setting-swatch swatch-' + item.value + '" aria-hidden="true"></span>'
-            : '<img class="setting-swatch" src="' + WP + S.c.wall + '-thumb.jpg" alt="">';
+            : '<img class="setting-swatch" src="' + WP + (item.thumbnailId || S.c.wall) + '-thumb.jpg" alt="">';
           if (item.inputNumber !== undefined) body += '<span class="input-choice-icon">' + (item.iconPreview && item.iconPreview !== 'hdmi' ? markHtml(item.iconPreview, 80, 48, 44) : item.iconPreview === 'hdmi' ? icon('inputs') : appMark({ sourceNumber: item.inputNumber, name: item.label }, 80, 48, 44)) + '</span>';
           body += '<span class="setting-copy"><span class="setting-name">' + esc(item.label) + '</span>'
             + (item.description ? '<span class="setting-description">' + esc(item.description) + '</span>' : '') + '</span>';
@@ -1615,30 +1677,35 @@
         }).join('') + '</div>'
         + (section.reason ? '<p class="setting-reason">' + esc(section.reason) + '</p>' : '') + '</section>';
     }).join(''));
+    var activeRow = appearanceRows.querySelector('.is-focus');
+    if (activeRow && ['background', 'packs'].indexOf(t.group) >= 0) {
+      if (activeRow.offsetTop < appearanceRows.scrollTop) appearanceRows.scrollTop = activeRow.offsetTop;
+      else if (activeRow.offsetTop + activeRow.offsetHeight > appearanceRows.scrollTop + appearanceRows.clientHeight) appearanceRows.scrollTop = activeRow.offsetTop + activeRow.offsetHeight - appearanceRows.clientHeight;
+    }
     if (S.pending) status = '<p>Cargando ' + esc(S.pending.row === 'font' ? FONTS[S.pending.target.font].name : 'tu selección') + '…</p><p>Volver cancela este cambio.</p>';
     else if (error) {
       status = '<p class="setting-error">' + (error.type === 'save' ? 'No se pudo guardar este cambio.' : error.type === 'font' ? 'No se pudo cargar ' + esc(FONTS[error.font].name) + '.' : 'No se pudo cargar este aspecto.') + ' Se conserva tu selección actual.</p>'
         + command({ action: 'settings.retry', label: 'Reintentar' }, '<span>Reintentar</span>', 'setting-retry');
     }
     setHTML(appearanceStatus, status);
-    hint = selected.disabled ? '' : selected.action === 'settings.back' ? 'Volver a ' + (t.group === 'rotation' ? 'Fondo' : t.group === 'inputs' ? 'Samsung' : 'Ajustes') : selected.action === 'settings.retry' ? 'Reintentar este cambio' : selected.axis || selected.portIcon !== undefined ? 'Aplicar la opción seleccionada' : selected.action === 'background.wallpaper' ? 'Elegir una imagen' : selected.action === 'background.rotation' ? 'Elegir el intervalo de rotación' : 'Abrir en la TV';
+    hint = selected.disabled ? '' : selected.action === 'settings.back' ? 'Volver a ' + (['rotation', 'packs', 'aspect', 'schedule'].indexOf(t.group) >= 0 ? 'Fondo' : t.group === 'inputs' ? 'Samsung' : 'Ajustes') : selected.action === 'settings.retry' ? 'Reintentar este cambio' : selected.axis || selected.portIcon !== undefined ? 'Aplicar la opción seleccionada' : selected.action === 'background.wallpaper' ? 'Elegir una escena del paquete' : selected.action.indexOf('background.') === 0 ? 'Abrir opciones del fondo' : selected.action.indexOf('schedule.') === 0 ? 'Cambiar la hora 30 minutos' : selected.action === 'background.rotation' ? 'Elegir el intervalo de rotación' : 'Abrir en la TV';
     setHTML(appearanceDesc, hint ? '<span class="remote-key">OK</span><span>' + esc(hint) + '</span>' : '');
   }
   function renderWallpaper(t) {
     V.wallpaper.norm(t);
     appearanceEl.className = 'appearance detail-wallpaper';
-    appearanceTitle.textContent = 'Imagen';
+    appearanceTitle.textContent = 'Escenas del paquete';
     appearanceRows.className = 'appearance-rows wallpaper-picker';
     appearanceBack.hidden = true;
     setHTML(appearanceRows, '<div class="wallpaper-edge wallpaper-before" aria-hidden="true">' + icon('up') + '</div><div class="wallpaper-list" role="radiogroup" aria-label="Imagen"><div class="wallpaper-rows"></div></div><div class="wallpaper-edge wallpaper-after" aria-hidden="true">' + icon('down') + '</div>');
-    var rows = appearanceRows.querySelector('.wallpaper-rows'), shown = wall(S.wallShown) || wall(S.c.wall), candidate = WALLS[t.i], status, note, hint;
-    keyed(rows, WALLS.map(function (w) { return { key: w.id, wall: w }; }), function (row, item, i) {
+    var rows = appearanceRows.querySelector('.wallpaper-rows'), shown = wall(S.wallShown) || wall(S.c.wall), candidate = wallpaperChoices(t)[t.i], status, note, hint;
+    keyed(rows, wallpaperChoices(t).map(function (w) { return { key: w.id, wall: w }; }), function (row, item, i) {
       var visible = i >= t.top && i < t.top + WALL_VISIBLE, w = item.wall, image;
-      setContent(row, w.id + '|' + visible, function () { return '<span class="wallpaper-thumb">' + (visible ? '<img src="' + WP + w.id + '-thumb.jpg" alt="">' : '') + '</span><span class="setting-copy"><span class="setting-name">' + esc(w.name) + '</span></span><span class="setting-tick" aria-hidden="true"></span>'; });
+      setContent(row, w.id + '|' + visible, function () { return '<span class="wallpaper-thumb">' + (visible ? '<img src="' + WP + w.id + '-thumb.jpg" alt="">' : '') + '</span><span class="setting-copy"><span class="setting-name">' + esc(WALL_ENGINE.locate(w.id).scene.name) + '</span></span><span class="setting-tick" aria-hidden="true"></span>'; });
       row.className = 'setting-choice wallpaper-choice' + (t.f.zone === 'photo' && t.i === i && !panelFocused(t) ? ' is-focus' : '') + (w.id === S.c.wall ? ' is-applied' : '');
       row.style.transform = 'translate3d(0,' + (i * WALL_ROW) + 'px,0)'; row.style.visibility = visible ? 'visible' : 'hidden';
       row.setAttribute('role', 'radio'); row.setAttribute('tabindex', '-1'); row.setAttribute('aria-label', w.name);
-      row.setAttribute('aria-checked', String(w.id === S.c.wall)); row.setAttribute('aria-posinset', String(i + 1)); row.setAttribute('aria-setsize', String(WALLS.length));
+      row.setAttribute('aria-checked', String(w.id === S.c.wall)); row.setAttribute('aria-posinset', String(i + 1)); row.setAttribute('aria-setsize', String(wallpaperChoices(t).length));
       row.setAttribute('aria-busy', String(t.previewDue === w.id || S.wallPending === w.id));
       attrs(row, 'wall-choice', i, 'wallpaper.choose.' + w.id);
       setHTML(row.querySelector('.setting-tick'), w.id === S.c.wall ? icon('check') : '');
@@ -1651,10 +1718,10 @@
     });
     rows.style.transform = 'translate3d(0,' + (-t.top * WALL_ROW) + 'px,0)';
     appearanceRows.querySelector('.wallpaper-before').className = 'wallpaper-edge wallpaper-before' + (t.top > 0 ? ' is-on' : '');
-    appearanceRows.querySelector('.wallpaper-after').className = 'wallpaper-edge wallpaper-after' + (t.top + WALL_VISIBLE < WALLS.length ? ' is-on' : '');
+    appearanceRows.querySelector('.wallpaper-after').className = 'wallpaper-edge wallpaper-after' + (t.top + WALL_VISIBLE < wallpaperChoices(t).length ? ' is-on' : '');
     note = t.previewDue ? 'Preparando ' + candidate.name + '…' : S.wallPending ? (t.applyPending ? 'Aplicando ' : 'Cargando ') + candidate.name + '…' : shown.id === S.c.wall ? 'Aplicada' : 'Vista previa';
     if (t.failedId) note = S.err ? 'No se pudo guardar ' + wall(t.failedId).name + '.' : 'No se pudo cargar ' + wall(t.failedId).name + '.';
-    status = '<p class="wallpaper-preview-name"><span>' + esc(shown.name) + '</span><span class="wallpaper-count">' + (wallIndex(shown.id) + 1) + ' de ' + WALLS.length + '</span></p><p class="wallpaper-preview-state' + (t.failedId ? ' setting-error' : '') + '">' + esc(note) + '</p>';
+    status = '<p class="wallpaper-preview-name"><span>' + esc(shown.name) + '</span><span class="wallpaper-count">' + (Math.max(0, wallpaperChoices(t).map(function (w) { return w.id; }).indexOf(shown.id)) + 1) + ' de ' + wallpaperChoices(t).length + '</span></p><p class="wallpaper-preview-state' + (t.failedId ? ' setting-error' : '') + '">' + esc(note) + '</p>';
     if (t.failedId) status += '<button type="button" tabindex="-1" class="setting-choice setting-retry' + (t.f.zone === 'retry' && !panelFocused(t) ? ' is-focus' : '') + '" data-z="wall-retry" data-action="wallpaper.retry">Reintentar</button>';
     setHTML(appearanceStatus, status);
     hint = t.f.zone === 'back' ? 'Volver a Fondo' : t.f.zone === 'retry' ? 'Reintentar esta imagen' : 'Aplicar la imagen seleccionada';
@@ -1705,7 +1772,7 @@
     if (panelNav.hidden) return;
     var active = t.nav !== undefined && t.nav !== null, parent = S.stack[S.stack.length - 2];
     var names = { home: 'Inicio', settings: 'Personalizar', apps: 'Apps y entradas', editor: 'Carrusel', appearance: 'Personalizar' };
-    var back = t.id === 'wallpaper' || t.id === 'appearance' && t.group === 'rotation' ? 'Fondo' : parent && parent.id === 'appearance' ? DETAIL_NAMES[parent.group] : names[parent && parent.id] || 'menú anterior';
+    var back = t.id === 'wallpaper' || t.id === 'appearance' && ['rotation', 'packs', 'aspect', 'schedule'].indexOf(t.group) >= 0 ? 'Fondo' : parent && parent.id === 'appearance' ? DETAIL_NAMES[parent.group] : names[parent && parent.id] || 'menú anterior';
     setHTML(panelNav, [['back', t.lifted ? 'Cancelar movimiento' : 'Volver a ' + back, 'left'], ['home', 'Inicio', 'home']].map(function (item, i) {
       return '<button type="button" tabindex="-1" class="panel-nav-button' + (active && t.nav === i ? ' is-focus' : '') + '" data-z="panel-nav" data-i="' + i + '" data-action="panel.' + item[0] + '">' + icon(item[2]) + '<span>' + esc(item[1]) + '</span></button>';
     }).join(''));
@@ -1888,8 +1955,8 @@
     imgs.mat = makeImg('mat-img', matSrc(look.wall, look.material));
     imgs.field = makeImg('ph-field-img', fieldSrc(look.wall, look.material));
     imgs.fieldAlt = makeImg('ph-field-img', fieldSrc(look.wall, look.material));
-    imgs.utility = makeImg('ph-field-img', fieldSrc(look.wall, look.material));
-    imgs.utilityAlt = makeImg('ph-field-img', fieldSrc(look.wall, look.material));
+    imgs.utility = makeImg('header-material-img', fieldSrc(look.wall, look.material));
+    imgs.utilityAlt = makeImg('header-material-img', fieldSrc(look.wall, look.material));
     keys = Object.keys(imgs); left = keys.length;
     keys.forEach(function (k) { whenReady(imgs[k], function (ok) {
       allOk = allOk && ok;
@@ -1911,6 +1978,9 @@
     if (!patch || typeof patch !== 'object') throw new Error('look needs an appearance patch');
     for (k in patch) if (patch.hasOwnProperty(k)) {
       if (k === 'wall') { if (!wall(patch[k])) throw new Error('Unknown wallpaper: ' + patch[k]); }
+      else if (k === 'pack') { if (!WALL_ENGINE.pack(patch[k])) throw new Error('Unknown pack'); }
+      else if (k === 'aspect') { if (['auto', 'day', 'night'].indexOf(patch[k]) < 0) throw new Error('Unknown aspect'); }
+      else if (k === 'dayStart' || k === 'nightStart') { if (typeof patch[k] !== 'number' || !isFinite(patch[k]) || patch[k] < 0 || patch[k] >= 1440 || Math.floor(patch[k]) !== patch[k]) throw new Error('Invalid time'); }
       else if (k === 'font') { if (!FONTS[patch[k]] || patch[k] !== 'manrope' && PRIVATE_FONTS.indexOf(patch[k]) < 0) throw new Error('Unavailable font: ' + patch[k]); }
       else if (!LOOK_VALUES[k] || LOOK_VALUES[k].indexOf(patch[k]) < 0) throw new Error('Invalid appearance value: ' + k);
       out[k] = patch[k];
@@ -1921,6 +1991,9 @@
   function setLook(patch, options) {
     var opts = options || {}, changes = cleanPatch(patch), target = lookOf(S.c), k, token, needs, needsFont, changed, loadedBundle = null, imageDone, fontDone, failed = false;
     for (k in changes) if (changes.hasOwnProperty(k)) target[k] = changes[k];
+    if (changes.wall && !changes.pack) target.pack = WALL_ENGINE.locate(changes.wall).pack.id;
+    if (target.dayStart === target.nightStart) throw new Error('Day and night times must differ');
+    target.wall = resolveWallpaper(target, false);
     changed = Object.keys(target).some(function (key) { return target[key] !== S.c[key]; });
     cancelLook(); S.err = null; token = wallToken;
     function finish(bundle) {
@@ -2010,20 +2083,26 @@
     activeSince = Date.now();
     rotationTimer = setTimeout(function () {
       pauseRotation(); activeMs = 0;
-      if (rotationActive()) setLook({ wall: WALLS[(wallIndex(S.c.wall) + 1) % WALLS.length].id }, { row: 'bg' });
+      if (rotationActive()) setLook({ wall: resolveWallpaper(S.c, true) }, { row: 'bg' });
     }, Math.max(10, mode().min * QA.minuteMs - activeMs));
+  }
+  function syncWallpaperTime() {
+    if (document.hidden || ownerDialogOpen() || S.c.bg !== 'photo' || S.pending || S.previewBundle || top().id === 'wallpaper' || S.lookError || !committedBundle) return;
+    var id = resolveWallpaper(S.c, false);
+    if (id !== S.c.wall) setLook({ wall: id }, { row: 'aspect' });
   }
   function updateClock() {
     clearTimeout(clockTimer);
     if (document.hidden) return;
-    if (top().id === 'home' || isSettingsDetail(top())) renderCaption(top(), homeState(top()));
+    syncWallpaperTime();
+    if (top().id === 'home' || isSettingsDetail(top())) { renderCaption(top(), homeState(top())); alignDockHeader(homeState(top())); }
     clockTimer = setTimeout(updateClock, 60000 - (Date.now() % 60000) + 30);
   }
   function focusStage() { if (ownerDialogOpen()) return; try { stage.focus({ preventScroll: true }); } catch (e) { stage.focus(); } }
   function after() {
     norm(); var t = top();
     if (t.group === 'inputs' && t.refreshInputs && !t.loading && !document.hidden) { t.refreshInputs = false; loadInputs(t); }
-    render(); syncRotation();
+    render(); syncRotation(); syncWallpaperTime();
   }
   function refreshInputsOnReturn() { var t = top(); if (t.group === 'inputs' && !t.loading) t.refreshInputs = true; }
   function goScene(name) {
@@ -2143,6 +2222,7 @@
     Array.prototype.forEach.call(active, function (el) { if (renderedAction(el)) { count++; if (el.getAttribute('data-action') === action) name = el.getAttribute('aria-label') || el.textContent.replace(/\s+/g, ' ').trim(); } });
     return { view: top().id, settingsGroup: top().id === 'wallpaper' ? 'wallpaper' : top().id === 'appearance' ? top().group : null, focus: name, focusAction: action, focusCount: count, wallpaper: S.wallShown, zone: top().f.zone || null };
   };
+  QA.wallpaperTick = function () { syncWallpaperTime(); return QA.state(); };
   QA.ready = function () { return fontsReady && !S.pending && !!S.shown && S.shown.bg === S.c.bg && S.shown.wall === S.c.wall && S.shown.font === S.c.font; };
   QA.nav = function () { var keys = arguments.length === 1 && Array.isArray(arguments[0]) ? arguments[0] : Array.prototype.slice.call(arguments); keys.forEach(function (key) { if (!NAV[key]) throw new Error('Unknown key'); press(NAV[key]); }); return QA.state(); };
   QA.look = function (patch) { setLook(patch, {}); return QA.state(); };

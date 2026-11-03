@@ -1,0 +1,45 @@
+{
+  "tool": "Built-in image_gen",
+  "history": [
+    {
+      "id": "videojuegos-verano-consolas-dia",
+      "reference": "videojuegos-invierno-consolas-dia.png",
+      "prompt": "Seasonal lighting/background edit of this HARDWARE HERO wallpaper. Preserve EXACTLY the large foreground devices, their scale, positions, camera crop and the seamless naturally calm lower surface. Hardware must remain the dominant subject; do not pull back to show a room. Change WINTER DAY to SUMMER DAY: remove snow from the small blurred background window/entrance; replace it with sunlit green foliage and warm summer daylight, a soft blue sky hint if visible. Fresh warm daylight and subtle pale gold highlights, warmer natural wood, slightly lighter atmosphere, device internals and controls remain crisp and readable. For the arcade preserve a real public arcade venue, never a home or terrace. No new objects, no readable text, no games imagery, no UI, no separate bottom rectangle or pasted band. One full-bleed 16:9 image."
+    },
+    {
+      "id": "videojuegos-verano-pc-dia",
+      "reference": "videojuegos-invierno-pc-dia.png",
+      "prompt": "Seasonal lighting/background edit of this HARDWARE HERO wallpaper. Preserve EXACTLY the large foreground devices, their scale, positions, camera crop and the seamless naturally calm lower surface. Hardware must remain the dominant subject; do not pull back to show a room. Change WINTER DAY to SUMMER DAY: remove snow from the small blurred background window/entrance; replace it with sunlit green foliage and warm summer daylight, a soft blue sky hint if visible. Fresh warm daylight and subtle pale gold highlights, warmer natural wood, slightly lighter atmosphere, device internals and controls remain crisp and readable. For the arcade preserve a real public arcade venue, never a home or terrace. No new objects, no readable text, no games imagery, no UI, no separate bottom rectangle or pasted band. One full-bleed 16:9 image."
+    },
+    {
+      "id": "videojuegos-verano-arcade-dia",
+      "reference": "videojuegos-invierno-arcade-dia-v2.png",
+      "prompt": "Seasonal lighting/background edit of this HARDWARE HERO wallpaper. Preserve EXACTLY the large foreground devices, their scale, positions, camera crop and the seamless naturally calm lower surface. Hardware must remain the dominant subject; do not pull back to show a room. Change WINTER DAY to SUMMER DAY: remove snow from the small blurred background window/entrance; replace it with sunlit green foliage and warm summer daylight, a soft blue sky hint if visible. Fresh warm daylight and subtle pale gold highlights, warmer natural wood, slightly lighter atmosphere, device internals and controls remain crisp and readable. For the arcade preserve a real public arcade venue, never a home or terrace. No new objects, no readable text, no games imagery, no UI, no separate bottom rectangle or pasted band. One full-bleed 16:9 image."
+    },
+    {
+      "id": "videojuegos-verano-consolas-dia-v2",
+      "reference": "videojuegos-invierno-consolas-dia.png",
+      "prompt": "Edit the attached hardware product photograph. Preserve every large foreground device, controller/key, scale, camera crop and calm wooden lower surface EXACTLY. Change ONLY the snow seen through the background window to lush green summer foliage and softly sunlit blue sky; change cool winter daylight to gentle summer daylight. Keep the SAME cozy PRIVATE HOME background with its blurred warm lamp and wall. Absolutely NO people, NO public venue, NO arcade cabinets anywhere, NO shop, NO new furnishings. Hardware remains the dominant sharp foreground subject. No text, no UI, no pasted bands; seamless natural photograph. This is the matching SUMMER DAY version of the input."
+    },
+    {
+      "id": "videojuegos-verano-pc-dia-v2",
+      "reference": "videojuegos-invierno-pc-dia.png",
+      "prompt": "Edit the attached hardware product photograph. Preserve every large foreground device, controller/key, scale, camera crop and calm wooden lower surface EXACTLY. Change ONLY the snow seen through the background window to lush green summer foliage and softly sunlit blue sky; change cool winter daylight to gentle summer daylight. Keep the SAME cozy PRIVATE HOME background with its blurred warm lamp and wall. Absolutely NO people, NO public venue, NO arcade cabinets anywhere, NO shop, NO new furnishings. Hardware remains the dominant sharp foreground subject. No text, no UI, no pasted bands; seamless natural photograph. This is the matching SUMMER DAY version of the input."
+    },
+    {
+      "id": "videojuegos-verano-arcade-noche",
+      "reference": "videojuegos-verano-arcade-dia.png",
+      "prompt": "Lighting-only edit. Preserve exact close-up arcade cabinets, joysticks, controls, colors, camera view and naturally continuous lower cabinet fronts/floor. Change SUMMER DAY to SUMMER NIGHT: the small entrance at far right shows a soft dark-blue summer night with green foliage and no snow. Amber pendant lights and cabinet screen/marquee glow illuminate the real arcade venue. Hardware stays large and crisp, background dark and secondary. No people, no invented lettering, no UI, no blurred rectangle at bottom. One seamless horizontal photograph."
+    },
+    {
+      "id": "videojuegos-verano-consolas-noche",
+      "reference": "videojuegos-verano-consolas-dia-v2.png",
+      "prompt": "Lighting-only edit of this close-up HARDWARE HERO product wallpaper. Preserve all foreground devices, scale, positions, camera crop and calm wooden bottom surface exactly. Same PRIVATE HOME setting, no people, no arcade machines or public venue. Change SUMMER DAY to SUMMER NIGHT: outside the small blurred window is dark-blue night and subtly visible green foliage, NO snow, cozy warm dim interior lamp, delicate gold highlights on devices, PC internal lighting / console details remain readable. Darker overall but hardware clearly visible and dominant. No new props, no text or UI, no artificial bottom overlay. One seamless 16:9 photograph."
+    },
+    {
+      "id": "videojuegos-verano-pc-noche",
+      "reference": "videojuegos-verano-pc-dia-v2.png",
+      "prompt": "Lighting-only edit of this close-up HARDWARE HERO product wallpaper. Preserve all foreground devices, scale, positions, camera crop and calm wooden bottom surface exactly. Same PRIVATE HOME setting, no people, no arcade machines or public venue. Change SUMMER DAY to SUMMER NIGHT: outside the small blurred window is dark-blue night and subtly visible green foliage, NO snow, cozy warm dim interior lamp, delicate gold highlights on devices, PC internal lighting / console details remain readable. Darker overall but hardware clearly visible and dominant. No new props, no text or UI, no artificial bottom overlay. One seamless 16:9 photograph."
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> Current wallpaper packages and single-line clock: [behavior and validation](wallpaper-packs.md). Historical gallery counts below are superseded.
+
 # Asset generation
 
 The app includes all runtime JPEGs, thumbnails, registered material fields, public fonts and icons. A clone can preview the current app without the original Downloads folder or any generation step. Keep photo and icon credits and third-party licences with the assets. The private Pangram overlay is described in [development](development.md).

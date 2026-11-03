@@ -1,0 +1,36 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "cine-series-oled",
+  "title": "Cine y series OLED",
+  "theme": "cine-series",
+  "season": "all",
+  "generator": "built-in image_gen",
+  "status": "Artwork ready; not installed; app package loader pending",
+  "scenes": [
+    {
+      "id": "cine",
+      "name": "Cine",
+      "day": "images/cine-dia.png",
+      "night": "images/cine-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "series",
+      "name": "Series",
+      "day": "images/series-dia.png",
+      "night": "images/series-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "streaming",
+      "name": "Streaming",
+      "day": "images/streaming-dia.png",
+      "night": "images/streaming-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

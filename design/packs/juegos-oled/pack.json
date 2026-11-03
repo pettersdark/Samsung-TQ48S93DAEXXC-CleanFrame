@@ -1,0 +1,60 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "juegos-oled",
+  "title": "Videojuegos OLED",
+  "theme": "videojuegos",
+  "season": "all",
+  "generator": "built-in image_gen",
+  "status": "Artwork ready; not installed; app package loader pending",
+  "scenes": [
+    {
+      "id": "consolas",
+      "name": "Consolas variadas",
+      "day": "images/consolas-dia.png",
+      "night": "images/consolas-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "pc",
+      "name": "PC completo",
+      "day": "images/pc-dia.png",
+      "night": "images/pc-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "arcade",
+      "name": "Arcade",
+      "day": "images/arcade-dia.png",
+      "night": "images/arcade-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "sony",
+      "name": "Consolas Sony",
+      "day": "images/sony-dia.png",
+      "night": "images/sony-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "nintendo",
+      "name": "Consolas Nintendo",
+      "day": "images/nintendo-dia.png",
+      "night": "images/nintendo-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "componentes-pc",
+      "name": "Componentes de PC",
+      "day": "images/componentes-pc-dia.png",
+      "night": "images/componentes-pc-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

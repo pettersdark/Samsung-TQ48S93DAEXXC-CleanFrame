@@ -1,0 +1,40 @@
+{
+  "packages": [
+    {
+      "id": "videojuegos-invierno",
+      "title": "Videojuegos Invierno",
+      "images": 6
+    },
+    {
+      "id": "videojuegos-verano",
+      "title": "Videojuegos Verano",
+      "images": 6
+    },
+    {
+      "id": "videojuegos-hardware",
+      "title": "Videojuegos Sistemas",
+      "images": 6
+    },
+    {
+      "id": "juegos-oled",
+      "title": "Videojuegos OLED",
+      "images": 12
+    },
+    {
+      "id": "cine-series-invierno",
+      "title": "Cine y series Invierno",
+      "images": 8
+    },
+    {
+      "id": "cine-series-verano",
+      "title": "Cine y series Verano",
+      "images": 8
+    },
+    {
+      "id": "cine-series-oled",
+      "title": "Cine y series OLED",
+      "images": 6
+    }
+  ],
+  "total_images": 52
+}

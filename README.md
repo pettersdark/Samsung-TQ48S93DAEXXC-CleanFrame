@@ -1,5 +1,7 @@
 # CleanFrame · Samsung S93D OLED
 
+**Release 1.1 — [Cambios en español / English changes](docs/releases/1.1.md)**
+
 A personal TV launcher adapted for the **Samsung TQ48S93DAEXXC (48-inch S93D OLED)**, based on [nthnclrk/CleanFrame](https://github.com/nthnclrk/CleanFrame). The TV interface is in Spanish. Documentation and screenshot captions are available in both languages.
 
 Un menú personal para la **Samsung TQ48S93DAEXXC (S93D OLED de 48 pulgadas)**, basado en CleanFrame. Interfaz en español; documentación y pies de captura en español e inglés.
@@ -8,7 +10,7 @@ Un menú personal para la **Samsung TQ48S93DAEXXC (S93D OLED de 48 pulgadas)**, 
 
 [Project record / Registro del proyecto](docs/bedroom/PROJECT.md) · [Screenshots / Capturas](docs/bedroom/SCREENSHOTS.md) · [Upstream README](README.upstream.md)
 
-![Night launcher / Menú nocturno](docs/images/bedroom/home-night.jpg)
+![Night launcher / Menú nocturno](docs/images/bedroom/release-1.1-night.jpg)
 
 ## Features / Funciones
 
@@ -17,7 +19,7 @@ Un menú personal para la **Samsung TQ48S93DAEXXC (S93D OLED de 48 pulgadas)**, 
 - Live TV preview, scrollable channel list, tuning and optional carousel shortcut. / TDT con vista previa, lista desplazable, cambio de canal y acceso opcional en el carrusel.
 - Separate launcher customization and Samsung quick settings. / Personalización del menú y ajustes rápidos de Samsung separados.
 - 24-hour clock and weekday; consistent focus and visible Back/Home controls. / Hora de 24 horas, día de la semana y controles visibles para volver e ir a inicio.
-- 22 backgrounds in 11 day/night pairs, with design masters and generation prompts. / 22 fondos en 11 parejas día/noche, con originales y descripciones de generación.
+- 52 backgrounds in seven packages (26 day/night pairs), with design masters and generation prompts. / 52 fondos en siete paquetes (26 parejas día/noche), con originales y descripciones de generación.
 
 ## Preview / Vista previa
 
@@ -41,3 +43,17 @@ Lee la guía antes de instalar. Usa certificados de desarrollador propios y una 
 ## Credits and licences / Créditos y licencias
 
 CleanFrame by Nathan Clark and contributors; bedroom adaptation for pettersdark. Preserve [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Brand logos retain their owners' rights. Generated wallpaper provenance is recorded in `app/assets/wallpapers/SOURCES.json`; prompts and selected masters are in `design/backgrounds/`. No Samsung or platform endorsement is claimed.
+
+## Wallpaper packages and inline clock / Paquetes y reloj en una línea
+
+This update replaces the previous gallery with seven offline packages / 52 images.
+Package selection, scene rotation and automatic day/night timing are in
+Personalizar → Fondo. The 24-hour time and weekday share one line. Existing
+Home/startup behavior is preserved for this model.
+
+Esta actualización sustituye la galería anterior por siete paquetes / 52 fondos.
+En Personalizar → Fondo se elige paquete, escena, rotación y horario día/noche.
+Hora y día van en una línea. Se conserva el comportamiento de Casa y arranque.
+[Behavior and validation / Uso y pruebas](docs/wallpaper-packs.md).
+
+![Seven wallpaper packages / Siete paquetes de fondos](docs/images/bedroom/wallpaper-packages.jpg)

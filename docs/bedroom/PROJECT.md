@@ -1,3 +1,15 @@
+> Release 1.1 (version metadata 1.1.0): [changes / cambios](../releases/1.1.md). Owner-confirmed menus, spacing and materials; native Home/startup preserved.
+
+> Wallpaper update 2026-11-03: seven packages / 52 images replace the previous
+> gallery. Time and weekday now share one line. The owner confirmed the app and
+> seven packages on this TV. ES5/resources, 27 unit/synthetic tests and full-pack
+> browser checks passed. Model-specific device adapter, identity, author, fonts
+> and native Home/startup behavior are preserved. [Details](../wallpaper-packs.md).
+>
+> Actualización 2026-11-03: siete paquetes / 52 fondos sustituyen la galería anterior.
+> Hora y día en una línea; app y siete paquetes confirmados por el propietario.
+> Versión publicada como release 1.1; consultar docs/releases/1.1.md.
+
 # Project record / Registro del proyecto
 
 Saved baseline: **Bedroom v14**, 2 November 2026. Based on upstream CleanFrame 0.7.0, commit `845f332`. This label records the adaptation; the inherited manifest version is not a separate published release.

@@ -1,0 +1,42 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "videojuegos-verano",
+  "title": "Videojuegos Verano",
+  "theme": "videojuegos",
+  "season": "verano",
+  "generator": "built-in image_gen",
+  "status": "artwork ready; app package loader not yet implemented",
+  "scenes": [
+    {
+      "id": "consolas",
+      "name": "Consolas",
+      "day": "images/consolas-dia.png",
+      "source_dia": "videojuegos-verano-consolas-dia-v2.png",
+      "night": "images/consolas-noche.png",
+      "source_noche": "videojuegos-verano-consolas-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "pc",
+      "name": "PC",
+      "day": "images/pc-dia.png",
+      "source_dia": "videojuegos-verano-pc-dia-v2.png",
+      "night": "images/pc-noche.png",
+      "source_noche": "videojuegos-verano-pc-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "arcade",
+      "name": "Sala recreativa",
+      "day": "images/arcade-dia.png",
+      "source_dia": "videojuegos-verano-arcade-dia.png",
+      "night": "images/arcade-noche.png",
+      "source_noche": "videojuegos-verano-arcade-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

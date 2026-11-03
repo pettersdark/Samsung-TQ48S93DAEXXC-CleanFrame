@@ -24,7 +24,7 @@ Brand marks identify services. Their owners retain trademark rights; this projec
 
 ## Wallpapers and derived materials in this adaptation
 
-The current application bundles 22 AI-generated backgrounds (11 day/night pairs), created with OpenAI ImageGen for this project. Selected full-resolution masters and generation prompts are in `design/backgrounds/`; runtime files and provenance are recorded in `app/assets/wallpapers/SOURCES.json`. Runtime JPEGs, thumbnails, panels and pre-rendered materials derive from those masters. Generated scenes may depict recognizable product shapes; no platform or manufacturer endorsement is claimed. Distribution does not grant rights to third-party trademarks.
+The current application bundles 52 AI-generated backgrounds (26 day/night pairs in seven packages), created with OpenAI ImageGen for this project. Selected full-resolution masters and generation prompts are in `design/packs/`; runtime files and provenance are recorded in `app/assets/wallpapers/SOURCES.json`. Runtime JPEGs, thumbnails, panels and pre-rendered materials derive from those masters. Generated scenes may depict recognizable product shapes; no platform or manufacturer endorsement is claimed. Distribution does not grant rights to third-party trademarks.
 
 The upstream Unsplash photographs were removed from the current app. Their historical source register and notices remain in Git history and upstream documentation; do not describe those photographs as the active gallery.
 

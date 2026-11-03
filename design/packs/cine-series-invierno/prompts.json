@@ -1,0 +1,72 @@
+{
+  "tool": "Built-in image_gen",
+  "source_histories": [
+    {
+      "source_pack": "cine-invierno",
+      "prompts": {
+        "tool": "Built-in image_gen",
+        "history": [
+          {
+            "id": "cine-invierno-salon-dia",
+            "prompt": "Use case: photorealistic-natural. Asset: ONE premium full-bleed horizontal 16:9 TV wallpaper, ideally 3840x2160. Strong composition constraint: ALL interesting furniture, equipment and props are in the TOP 60% and side edges. The entire BOTTOM 40% must be very calm continuous floor/rug with low texture contrast, no objects, no table legs in bottom center, no bright reflections or hard shadow stripes; this area will sit behind a large app carousel. Pull the camera back / widen framing to achieve this deliberately. Top 10% also quiet enough for clock/navigation. Do NOT draw interface, icons, menu bars, lettering, watermarks or people. Warm believable cinematic photography, beautiful wood and tactile fabric, no marble, no pale stone pedestals, no visual clutter. No recognizable film/game images or legible text. TV/monitor screens dark and blank except arcade screens with subtle nonspecific pixel glow. Wintry atmosphere should be evident in a window or entrance high in frame, not through Christmas decorations.\nA cozy HOME CINEMA LIVING ROOM in WINTER DAY. Rear-wall walnut media console with blank dark television, a linen sofa and thick wool blanket at far left in upper-middle frame, a small bowl of popcorn and ceramic mug ON the rear side table, warm shaded lamps, cream plaster and honey wood. A high side window shows softly snow-covered trees, winter daylight. Bottom 40% broad plain oatmeal wool rug, uncluttered, no coffee table occupying the carousel area. Intimate warm amber/cream/cinnamon palette, room furniture purposefully pulled back into top 60%."
+          },
+          {
+            "id": "cine-invierno-proyeccion-dia",
+            "prompt": "Use case: photorealistic-natural. Asset: ONE premium full-bleed horizontal 16:9 TV wallpaper, ideally 3840x2160. Strong composition constraint: ALL interesting furniture, equipment and props are in the TOP 60% and side edges. The entire BOTTOM 40% must be very calm continuous floor/rug with low texture contrast, no objects, no table legs in bottom center, no bright reflections or hard shadow stripes; this area will sit behind a large app carousel. Pull the camera back / widen framing to achieve this deliberately. Top 10% also quiet enough for clock/navigation. Do NOT draw interface, icons, menu bars, lettering, watermarks or people. Warm believable cinematic photography, beautiful wood and tactile fabric, no marble, no pale stone pedestals, no visual clutter. No recognizable film/game images or legible text. TV/monitor screens dark and blank except arcade screens with subtle nonspecific pixel glow. Wintry atmosphere should be evident in a window or entrance high in frame, not through Christmas decorations.\nA small refined PRIVATE HOME PROJECTION ROOM in WINTER DAY. Blank unlit charcoal projection screen on rear wall surrounded by walnut acoustic slats, two caramel velvet cinema armchairs on left and right further back in the TOP 60%, little armrest tables with one bowl of popcorn. A discreet ceiling projector and small curtained side window high at the back showing snow. Natural soft winter daylight with warm wall lamps, wool throws folded on chairs. Lower 40% is uninterrupted dark camel rug, no furniture intruding into bottom center. It must feel like a private cinema, not a commercial multiplex."
+          },
+          {
+            "id": "cine-invierno-cinefilo-dia",
+            "prompt": "Use case: photorealistic-natural. Asset: ONE premium full-bleed horizontal 16:9 TV wallpaper, ideally 3840x2160. Strong composition constraint: ALL interesting furniture, equipment and props are in the TOP 60% and side edges. The entire BOTTOM 40% must be very calm continuous floor/rug with low texture contrast, no objects, no table legs in bottom center, no bright reflections or hard shadow stripes; this area will sit behind a large app carousel. Pull the camera back / widen framing to achieve this deliberately. Top 10% also quiet enough for clock/navigation. Do NOT draw interface, icons, menu bars, lettering, watermarks or people. Warm believable cinematic photography, beautiful wood and tactile fabric, no marble, no pale stone pedestals, no visual clutter. No recognizable film/game images or legible text. TV/monitor screens dark and blank except arcade screens with subtle nonspecific pixel glow. Wintry atmosphere should be evident in a window or entrance high in frame, not through Christmas decorations.\nA film-lover's private library / CINEMA NOOK in WINTER DAY. Walnut bookshelves high along back and side walls, neutral film books and disc cases without readable lettering or cover pictures, a small blank clapperboard and metal film reel on a shelf, blank dark TV above a low wood console at back, rust boucle reading chair high at the side with wool throw. Snow beyond a tall window, cozy amber task light, warm plaster. All items stay in top 60% / far edges; bottom 40% is a broad empty low-contrast sand wool rug and oak floor."
+          },
+          {
+            "id": "cine-invierno-salon-dia-v2",
+            "reference": "cine-invierno-salon-dia.png",
+            "prompt": "Precise object removal edit of THIS private home cinema winter-day wallpaper. REMOVE EVERY arcade cabinet and gaming machine from this room. Replace their occupied area naturally with matching uninterrupted matching warm wall paneling and normal floor below. This is CINEMA ONLY: absolutely no arcade, no consoles, no gaming PC, no controllers. Preserve all other furniture, screen, snowy window, lighting, framing and the broad quiet empty lower floor/rug exactly. Do not add anything else. Seamless photorealistic interior, no marble, text or UI."
+          },
+          {
+            "id": "cine-invierno-proyeccion-dia-v2",
+            "reference": "cine-invierno-proyeccion-dia.png",
+            "prompt": "Precise object removal edit of THIS private home cinema winter-day wallpaper. REMOVE EVERY arcade cabinet and gaming machine from this room. Replace their occupied area naturally with matching uninterrupted matching warm wall paneling and normal floor below. This is CINEMA ONLY: absolutely no arcade, no consoles, no gaming PC, no controllers. Preserve all other furniture, screen, snowy window, lighting, framing and the broad quiet empty lower floor/rug exactly. Do not add anything else. Seamless photorealistic interior, no marble, text or UI."
+          },
+          {
+            "id": "cine-invierno-cinefilo-dia-v2",
+            "reference": "cine-invierno-cinefilo-dia.png",
+            "prompt": "Precise object removal edit of THIS private home cinema winter-day wallpaper. REMOVE EVERY arcade cabinet and gaming machine from this room. Replace their occupied area naturally with matching walnut bookshelves and neutral film books/disc cases and normal floor below. This is CINEMA ONLY: absolutely no arcade, no consoles, no gaming PC, no controllers. Preserve all other furniture, screen, snowy window, lighting, framing and the broad quiet empty lower floor/rug exactly. Do not add anything else. Seamless photorealistic interior, no marble, text or UI."
+          },
+          {
+            "id": "cine-invierno-salon-noche",
+            "reference": "cine-invierno-salon-dia-v2.png",
+            "prompt": "Lighting-only edit of THIS CINEMA-ONLY room. Preserve exact furniture, books, blank screen, props, framing and quiet lower floor/rug. It is WINTER NIGHT: outside the window is dark blue snowy night, no daylight; warm dim amber lamps and gentle indirect light indoors. Clearly darker night version, cozy and readable details. Do NOT add arcade cabinets or ANY gaming equipment, people, readable lettering, films on screens or UI. Keep one seamless photograph, no bottom bands or overlays."
+          },
+          {
+            "id": "cine-invierno-proyeccion-noche",
+            "reference": "cine-invierno-proyeccion-dia-v2.png",
+            "prompt": "Lighting-only edit of THIS CINEMA-ONLY room. Preserve exact furniture, books, blank screen, props, framing and quiet lower floor/rug. It is WINTER NIGHT: outside the window is dark blue snowy night, no daylight; warm dim amber lamps and gentle indirect light indoors. Clearly darker night version, cozy and readable details. Do NOT add arcade cabinets or ANY gaming equipment, people, readable lettering, films on screens or UI. Keep one seamless photograph, no bottom bands or overlays."
+          },
+          {
+            "id": "cine-invierno-cinefilo-noche",
+            "reference": "cine-invierno-cinefilo-dia-v2.png",
+            "prompt": "Lighting-only edit of THIS CINEMA-ONLY room. Preserve exact furniture, books, blank screen, props, framing and quiet lower floor/rug. It is WINTER NIGHT: outside the window is dark blue snowy night, no daylight; warm dim amber lamps and gentle indirect light indoors. Clearly darker night version, cozy and readable details. Do NOT add arcade cabinets or ANY gaming equipment, people, readable lettering, films on screens or UI. Keep one seamless photograph, no bottom bands or overlays."
+          }
+        ]
+      }
+    },
+    {
+      "source_pack": "series-invierno",
+      "prompts": {
+        "tool": "Built-in image_gen",
+        "history": [
+          {
+            "id": "series-invierno-maraton-dia",
+            "prompt": "Use case: photorealistic-natural. Asset: ONE premium full-bleed horizontal 16:9 TV wallpaper, ideally 3840x2160. Strong composition constraint: ALL interesting furniture, equipment and props are in the TOP 60% and side edges. The entire BOTTOM 40% must be very calm continuous floor/rug with low texture contrast, no objects, no table legs in bottom center, no bright reflections or hard shadow stripes; this area will sit behind a large app carousel. Pull the camera back / widen framing to achieve this deliberately. Top 10% also quiet enough for clock/navigation. Do NOT draw interface, icons, menu bars, lettering, watermarks or people. Warm believable cinematic photography, beautiful wood and tactile fabric, no marble, no pale stone pedestals, no visual clutter. No recognizable film/game images or legible text. TV/monitor screens dark and blank except arcade screens with subtle nonspecific pixel glow. Wintry atmosphere should be evident in a window or entrance high in frame, not through Christmas decorations.\nA distinct cozy TV SERIES MARATHON room in WINTER DAY, casual and welcoming rather than a cinema theater. A wide deep sectional sofa at the back left in upper-middle frame with thick cream knit blanket, a soft muted cinnamon pillow, a back-wall blank dark television, a small rear side table holding hot chocolate and a bowl of popcorn, warm stringless floor lamp, shelves with understated plants. Broad window in upper-right background looks onto snowy trees and overcast winter daylight. Palette cream, warm oak, muted burnt orange and soft forest green. All cozy props and furniture kept above bottom 40%, which is calm uninterrupted warm-gray carpet. No clapperboard, movie reels, arcade machines, game gear or books covering floor."
+          },
+          {
+            "id": "series-invierno-maraton-noche",
+            "reference": "series-invierno-maraton-dia.png",
+            "prompt": "Lighting-only edit of THIS cozy series-watching room. Preserve exact sofa, blankets, hot chocolate/popcorn, furniture positions, camera framing and clear quiet lower rug. Change winter daytime outside to snowy dark blue WINTER NIGHT, with warm dim amber lamps indoors. Rich cozy details remain visible, no daylight. Screens stay dark. No additions, no people, no videogames or arcade equipment, no text or UI. One seamless 16:9 wallpaper."
+          }
+        ]
+      }
+    }
+  ]
+}

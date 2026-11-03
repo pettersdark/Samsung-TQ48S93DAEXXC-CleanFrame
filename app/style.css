@@ -782,3 +782,56 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .editor-home-before,.editor-home-after{left:952px;width:32px}
 .editor-home-before{top:264px}
 .editor-home-after{top:976px}
+
+/* Wallpaper packs: bounded lists and matching remote focus in the 1080p stage. */
+.detail-background .appearance-rows,.detail-packs .appearance-rows{top:236px;height:672px;overflow-y:auto;overflow-x:hidden;padding-right:14px;scrollbar-width:thin}
+.detail-background .setting-section+.setting-section{margin-top:12px}
+.detail-background .setting-label{font-size:24px;line-height:28px;margin-bottom:4px}
+.detail-background .setting-choice{min-height:62px;padding:6px 16px;font-size:28px;line-height:36px}
+.detail-background .section-bg .setting-options{flex-direction:row}
+.detail-background .section-bg .setting-choice{width:auto;flex:1;padding:8px;font-size:26px}
+.detail-background .section-bg .setting-swatch{display:none}
+.detail-background .section-rotation .setting-choice{padding-left:16px}
+.detail-packs .setting-choice.has-description{min-height:96px;padding:8px 16px;font-size:28px;line-height:34px}
+.detail-packs .setting-description{font-size:22px;line-height:28px}
+.detail-packs .setting-swatch{width:96px;height:54px}
+.detail-packs .setting-reason{font-size:22px;line-height:28px}
+.detail-background .setting-name,.detail-packs .setting-name{white-space:normal;overflow-wrap:break-word}
+.detail-background .appearance-rows::-webkit-scrollbar,.detail-packs .appearance-rows::-webkit-scrollbar{width:6px}
+.detail-background .appearance-rows::-webkit-scrollbar-thumb,.detail-packs .appearance-rows::-webkit-scrollbar-thumb{background:var(--mute);border-radius:4px}
+/* Keep controls readable when a device crosses the top of a new photograph. */
+.bg-photo .quiet-utils{background:rgba(8,10,16,.76);box-shadow:0 0 0 10px rgba(8,10,16,.76);border-radius:12px}
+.bg-photo.gaming-day .quiet-utils{background:rgba(248,250,252,.88);box-shadow:0 0 0 10px rgba(248,250,252,.88)}
+.clock-line{display:inline-flex;align-items:baseline;align-self:flex-start;white-space:nowrap}
+.clock-line .clock-day{margin-top:0;margin-left:16px;font-size:26px;line-height:36px}
+.l-list .clock-line{align-self:flex-end}
+.bg-photo .caption>.clock-line{padding:0 10px;background:rgba(8,10,16,.72);border-radius:12px}
+.bg-photo.gaming-day .caption>.clock-line{background:rgba(248,250,252,.84)}
+.bg-photo.gaming-day.l-list .ph-col{display:block;background:linear-gradient(to right,rgba(248,250,252,.94) 0,rgba(248,250,252,.90) 600px,rgba(248,250,252,0) 1040px)}
+
+/* Symmetric Home frame: 48px above and below in the 1920x1080 stage. */
+.stage.l-dock .quiet-utils{top:48px;right:96px;padding:10px;box-shadow:none;transform-origin:100% 0}
+.stage.l-dock .caption>.clock-line{padding:10px;border-radius:12px}
+
+/* Header and clock share the selected cached material. No runtime blur. */
+.header-material{position:absolute;z-index:2;overflow:hidden;border-radius:12px;pointer-events:none}
+.header-material[hidden]{display:none}
+.header-material-img{position:absolute;width:1920px;height:1080px;max-width:none}
+.header-material-veil{position:absolute;left:0;top:0;right:0;bottom:0;background:rgba(8,10,16,.68)}
+.header-material::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.stage .caption{z-index:3}
+.stage.bg-photo .quiet-utils,.stage.bg-photo .caption>.clock-line{background:transparent;box-shadow:none}
+.m-frost .header-material-veil{background:rgba(8,10,16,.48)}
+.m-tint .header-material-img{opacity:.12}
+.m-tint .header-material-veil{background:rgba(8,10,16,.38)}
+.gaming-day.m-soft .header-material{background:rgba(255,255,255,.94)}
+.gaming-day.m-soft .header-material-img,.gaming-day.m-soft .header-material-veil{display:none}
+.gaming-day.m-frost .header-material-veil{background:rgba(255,255,255,.86)}
+.gaming-day.m-tint .header-material-veil{background:rgba(255,255,255,.38)}
+.gaming-day .header-material::after{box-shadow:inset 0 0 0 1px rgba(23,32,43,.12)}
+/* Clear mode exposes the original photo more strongly, with restrained edges. */
+.bg-photo.m-tint .dock .mat{background:rgba(8,10,16,.10)}
+.bg-photo.m-tint .dock .mat-img{opacity:.18;transform:none}
+.bg-photo.gaming-day.m-tint .dock .mat{background:rgba(255,255,255,.38)}
+.m-tint .mat::before{opacity:.3}
+.m-tint .mat::after{box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}

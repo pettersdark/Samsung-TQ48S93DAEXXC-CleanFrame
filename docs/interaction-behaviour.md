@@ -1,3 +1,5 @@
+> Current wallpaper packages and single-line clock: [behavior and validation](wallpaper-packs.md). Historical gallery counts below are superseded.
+
 # Interaction behaviour — 0.7.0
 
 ## Home

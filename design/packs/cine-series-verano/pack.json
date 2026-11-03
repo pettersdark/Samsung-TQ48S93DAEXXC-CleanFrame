@@ -1,0 +1,52 @@
+{
+  "format": "cleanframe-wallpaper-artwork",
+  "version": 1,
+  "id": "cine-series-verano",
+  "title": "Cine y series Verano",
+  "theme": "cine-series",
+  "season": "verano",
+  "generator": "built-in image_gen",
+  "status": "Artwork ready; not installed; app package loader pending",
+  "scenes": [
+    {
+      "id": "salon",
+      "name": "Salón de cine",
+      "day": "images/salon-dia.png",
+      "source_dia": "cine-verano-salon-dia.png",
+      "night": "images/salon-noche.png",
+      "source_noche": "cine-verano-salon-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "proyeccion",
+      "name": "Sala de proyección",
+      "day": "images/proyeccion-dia.png",
+      "source_dia": "cine-verano-proyeccion-dia.png",
+      "night": "images/proyeccion-noche.png",
+      "source_noche": "cine-verano-proyeccion-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "cinefilo",
+      "name": "Rincón cinéfilo",
+      "day": "images/cinefilo-dia.png",
+      "source_dia": "cine-verano-cinefilo-dia.png",
+      "night": "images/cinefilo-noche.png",
+      "source_noche": "cine-verano-cinefilo-noche.png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "maraton",
+      "name": "Maratón de series",
+      "day": "images/maraton-dia.png",
+      "source_dia": "series-verano-maraton-dia.png",
+      "night": "images/maraton-noche.png",
+      "source_noche": "series-verano-maraton-noche.png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
